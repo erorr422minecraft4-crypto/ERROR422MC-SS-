@@ -1,0 +1,1673 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+
+       local Window = MakeWindow({
+         Hub = {
+         Title = "Erorr422MC SS v0.2",
+         Animation = "Team: Erorr422MC"
+         },
+        Key = {
+        KeySystem = false,
+        Title = "Key System",
+        Description = "",
+        KeyLink = "",
+        Keys = {"1234"},
+        Notifi = {
+        Notifications = true,
+        CorrectKey = "Running the Script...",
+       Incorrectkey = "The key is incorrect",
+       CopyKeyLink = "Copied to Clipboard"
+      }
+    }
+  })
+
+       MinimizeButton({
+       Image = "http://www.roblox.com/asset/?id=135940837752529",
+       Size = {40, 40},
+       Color = Color3.fromRGB(55, 255, 150),
+       Corner = true,
+       Stroke = false,
+       StrokeColor = Color3.fromRGB(155, 185, 15)
+      })
+      
+------ Tab
+     local Tab1o = MakeTab({Name = "Erorr422MC Script (FE)!"})
+     
+     local Tab2o = MakeTab({Name = "Erorr422MC Script(BD)!"})
+     
+     local Tab3o = MakeTab({Name = "FE BPASS script!"})
+     
+------- BUTTON
+    
+    AddButton(Tab1o, {
+     Name = "SKY FE!",
+    Callback = function()
+local vietnam = Instance.new("Sound")
+vietnam.Parent = game.Workspace
+vietnam.SoundId = "rbxassetid://1847661821"
+vietnam.PlaybackSpeed = 1
+vietnam.Looped = true
+vietnam.Playing = true
+local Distort = Instance.new("DistortionSoundEffect")
+Distort.Parent = vietnam
+
+local fe = Instance.new("Message")
+fe.Parent = game.Workspace
+fe.Text = "ERORR422 MINECRAFT!!"
+local ERORR422 = Instance.new("Sky")
+ERORR422.Parent = game.Lighting
+while wait(0.02) do
+ERORR422.SkyboxBk = "rbxassetid://72884604164473"
+ERORR422.SkyboxDn = ERORR422.SkyboxBk
+ERORR422.SkyboxLf = ERORR422.SkyboxBk
+ERORR422.SkyboxRt = ERORR422.SkyboxBk
+ERORR422.SkyboxFt = ERORR422.SkyboxBk
+ERORR422.SkyboxUp = ERORR422.SkyboxBk
+wait(0.40)
+ERORR422.SkyboxBk = "rbxassetid://135940837752529"
+ERORR422.SkyboxDn = ERORR422.SkyboxBk
+ERORR422.SkyboxLf = ERORR422.SkyboxBk
+ERORR422.SkyboxRt = ERORR422.SkyboxBk
+ERORR422.SkyboxFt = ERORR422.SkyboxBk
+ERORR422.SkyboxUp = ERORR422.SkyboxBk
+wait(0.40)
+end
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "Decal spam1",
+    Callback = function()
+    local decalID = 135940837752529
+    local function exPro(root)
+        for _, v in pairs(root:GetChildren()) do
+            if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
+                v.Parent = nil
+            elseif v:IsA("BasePart") then
+                v.Material = "Plastic"
+                v.Transparency = 0
+                local One = Instance.new("Decal", v)
+                local Two = Instance.new("Decal", v)
+                local Three = Instance.new("Decal", v)
+                local Four = Instance.new("Decal", v)
+                local Five = Instance.new("Decal", v)
+                local Six = Instance.new("Decal", v)
+                One.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Two.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Three.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Four.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Five.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Six.Texture = "http://www.roblox.com/asset/?id="..decalID
+                One.Face = "Front"
+                Two.Face = "Back"
+                Three.Face = "Right"
+                Four.Face = "Left"
+                Five.Face = "Top"
+                Six.Face = "Bottom"
+            end
+            exPro(v)
+        end
+    end
+    local function asdf(root)
+        for _, v in pairs(root:GetChildren()) do
+            asdf(v)
+        end
+    end
+    exPro(game.Workspace)
+    asdf(game.Workspace)
+
+    local s = Instance.new("Sky")
+    s.Name = "Sky"
+    s.Parent = game.Lighting
+    local skyboxID = 135940837752529
+    s.SkyboxBk = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxDn = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxFt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
+    game.Lighting.TimeOfDay = 12
+
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=135940837752529"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=135940837752529"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=135940837752529"
+        emit.VelocitySpread = 20
+    end
+    while true do
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+    end
+  end
+  })
+  
+    AddButton(Tab1o, {
+     Name = "Decal spam2",
+    Callback = function()
+    local decalID = 87593584082928
+    local function exPro(root)
+        for _, v in pairs(root:GetChildren()) do
+            if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
+                v.Parent = nil
+            elseif v:IsA("BasePart") then
+                v.Material = "Plastic"
+                v.Transparency = 0
+                local One = Instance.new("Decal", v)
+                local Two = Instance.new("Decal", v)
+                local Three = Instance.new("Decal", v)
+                local Four = Instance.new("Decal", v)
+                local Five = Instance.new("Decal", v)
+                local Six = Instance.new("Decal", v)
+                One.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Two.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Three.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Four.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Five.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Six.Texture = "http://www.roblox.com/asset/?id="..decalID
+                One.Face = "Front"
+                Two.Face = "Back"
+                Three.Face = "Right"
+                Four.Face = "Left"
+                Five.Face = "Top"
+                Six.Face = "Bottom"
+            end
+            exPro(v)
+        end
+    end
+    local function asdf(root)
+        for _, v in pairs(root:GetChildren()) do
+            asdf(v)
+        end
+    end
+    exPro(game.Workspace)
+    asdf(game.Workspace)
+
+    local s = Instance.new("decal spam2")
+    s.Name = "decal spam2"
+    s.Parent = game.Lighting
+    local skyboxID = 87593584082928
+    s.SkyboxBk = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxDn = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxFt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
+    game.Lighting.TimeOfDay = 12
+
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=87593584082928"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id="
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=87593584082928"
+        emit.VelocitySpread = 20
+    end
+    while true do
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+    end
+
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "Decal spam3",
+    Callback = function()
+    local decalID = 83269743706985
+    local function exPro(root)
+        for _, v in pairs(root:GetChildren()) do
+            if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
+                v.Parent = nil
+            elseif v:IsA("BasePart") then
+                v.Material = "Plastic"
+                v.Transparency = 0
+                local One = Instance.new("Decal", v)
+                local Two = Instance.new("Decal", v)
+                local Three = Instance.new("Decal", v)
+                local Four = Instance.new("Decal", v)
+                local Five = Instance.new("Decal", v)
+                local Six = Instance.new("Decal", v)
+                One.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Two.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Three.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Four.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Five.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Six.Texture = "http://www.roblox.com/asset/?id="..decalID
+                One.Face = "Front"
+                Two.Face = "Back"
+                Three.Face = "Right"
+                Four.Face = "Left"
+                Five.Face = "Top"
+                Six.Face = "Bottom"
+            end
+            exPro(v)
+        end
+    end
+    local function asdf(root)
+        for _, v in pairs(root:GetChildren()) do
+            asdf(v)
+        end
+    end
+    exPro(game.Workspace)
+    asdf(game.Workspace)
+
+    local s = Instance.new("Sky")
+    s.Name = "Sky"
+    s.Parent = game.Lighting
+    local skyboxID = 83269743706985
+    s.SkyboxBk = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxDn = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxFt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
+    game.Lighting.TimeOfDay = 12
+
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=83269743706985"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=83269743706985"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=83269743706985"
+        emit.VelocitySpread = 20
+    end
+    while true do
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1) 
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.1)  
+    end
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "Decal spam4",
+    Callback = function()
+    local decalID = 8408806737
+    local function exPro(root)
+        for _, v in pairs(root:GetChildren()) do
+            if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
+                v.Parent = nil
+            elseif v:IsA("BasePart") then
+                v.Material = "Plastic"
+                v.Transparency = 0
+                local One = Instance.new("Decal", v)
+                local Two = Instance.new("Decal", v)
+                local Three = Instance.new("Decal", v)
+                local Four = Instance.new("Decal", v)
+                local Five = Instance.new("Decal", v)
+                local Six = Instance.new("Decal", v)
+                One.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Two.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Three.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Four.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Five.Texture = "http://www.roblox.com/asset/?id="..decalID
+                Six.Texture = "http://www.roblox.com/asset/?id="..decalID
+                One.Face = "Front"
+                Two.Face = "Back"
+                Three.Face = "Right"
+                Four.Face = "Left"
+                Five.Face = "Top"
+                Six.Face = "Bottom"
+            end
+            exPro(v)
+        end
+    end
+    local function asdf(root)
+        for _, v in pairs(root:GetChildren()) do
+            asdf(v)
+        end
+    end
+    exPro(game.Workspace)
+    asdf(game.Workspace)
+
+    local s = Instance.new("Sky")
+    s.Name = "Sky"
+    s.Parent = game.Lighting
+    local skyboxID = 8408806737
+    s.SkyboxBk = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxDn = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxFt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
+    game.Lighting.TimeOfDay = 12
+
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=8408806737"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=8408806737"
+        emit.VelocitySpread = 20
+    end
+    for i, v in pairs(game.Players:GetChildren()) do
+        local emit = Instance.new("ParticleEmitter")
+        emit.Parent = v.Character.Torso
+        emit.Texture = "http://www.roblox.com/asset/?id=8408806737"
+        emit.VelocitySpread = 20
+    end
+    while true do
+        game.Lighting.Ambient = Color3.new(math.random() , math.random() , math.random())
+        wait(0.2)
+        game.Lighting.ShadowColor = Color3.new(math.random() , math.random() , math.random())
+        wait(0.2) 
+    end
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "Nether",
+    Callback = function()
+-- https://scriptblox.com/script/Universal-Script-Fire-all-12970
+
+function fyr(dd)
+    for i,v in next,dd:children''do
+        if(v:IsA'BasePart')then
+            f=Instance.new('Fire',v);
+            f.Size=25;
+            f.Heat=19;
+        end;
+        if #(v:GetChildren())>0 then
+            fyr(v) 
+        end
+    end
+end
+
+fyr(game.Workspace)
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "c00lkidd executor",
+    Callback = function()
+local GuiV1 = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local ImageLabel = Instance.new("ImageLabel")
+local SourceFrame = Instance.new("Frame")
+local SourceScrolling = Instance.new("ScrollingFrame")
+local Input = Instance.new("TextBox")
+local ExecuteBtn = Instance.new("TextButton")
+local ClearBtn = Instance.new("TextButton")
+local ResetBtn = Instance.new("TextButton")
+local R6Btn = Instance.new("TextButton")
+local ResetAllBtn = Instance.new("TextButton")
+local IconBtn = Instance.new("TextButton")
+local ImageLabel_2 = Instance.new("ImageLabel")
+
+GuiV1.Name = "GuiV1"
+GuiV1.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+GuiV1.ResetOnSpawn = false
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = GuiV1
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BackgroundTransparency = 0.200
+MainFrame.BorderColor3 = Color3.fromRGB(255, 0, 4)
+MainFrame.BorderSizePixel = 2
+MainFrame.Position = UDim2.new(0.30769223, 0, 0.293081909, 0)
+MainFrame.Size = UDim2.new(0.384615391, 0, 0.411320746, 0)
+MainFrame.ZIndex = 2
+MainFrame.Active = true
+MainFrame.Selectable = true
+MainFrame.Draggable = true
+
+TextLabel.Parent = MainFrame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.262645155, 0, -0.00305810408, 0)
+TextLabel.Size = UDim2.new(0.506976724, 0, 0.137614772, 0)
+TextLabel.ZIndex = 3
+TextLabel.Font = Enum.Font.Cartoon
+TextLabel.Text = "c00lkidd 2026"
+TextLabel.TextColor3 = Color3.fromRGB(255, 0, 4)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextStrokeTransparency = 0.000
+TextLabel.TextWrapped = true
+
+ImageLabel.Parent = MainFrame
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BackgroundTransparency = 1.000
+ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Position = UDim2.new(0.557909608, 0, -0.304188192, 0)
+ImageLabel.Rotation = 20.000
+ImageLabel.Size = UDim2.new(0.475968987, 0, 0.920489311, 0)
+ImageLabel.ZIndex = 2
+ImageLabel.Image = "rbxassetid://8408806737"
+ImageLabel.ScaleType = Enum.ScaleType.Fit
+
+SourceFrame.Name = "SourceFrame"
+SourceFrame.Parent = MainFrame
+SourceFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+SourceFrame.BorderColor3 = Color3.fromRGB(255, 16, 20)
+SourceFrame.BorderSizePixel = 2
+SourceFrame.Position = UDim2.new(0.0167014897, 0, 0.137614772, 0)
+SourceFrame.Size = UDim2.new(0.968992233, 0, 0.730886877, 0)
+SourceFrame.ZIndex = 3
+
+SourceScrolling.Name = "SourceScrolling"
+SourceScrolling.Parent = SourceFrame
+SourceScrolling.Active = true
+SourceScrolling.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SourceScrolling.BackgroundTransparency = 1.000
+SourceScrolling.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SourceScrolling.BorderSizePixel = 0
+SourceScrolling.Size = UDim2.new(1, 0, 1, 0)
+SourceScrolling.ZIndex = 2
+SourceScrolling.HorizontalScrollBarInset = Enum.ScrollBarInset.Always
+SourceScrolling.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+
+Input.Name = "Input"
+Input.Parent = SourceScrolling
+Input.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Input.BackgroundTransparency = 1.000
+Input.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Input.BorderSizePixel = 0
+Input.Size = UDim2.new(1, 0, 1, 0)
+Input.ZIndex = 3
+Input.ClearTextOnFocus = false
+Input.Font = Enum.Font.SourceSansBold
+Input.MultiLine = true
+Input.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+Input.Text = ""
+Input.TextColor3 = Color3.fromRGB(255, 255, 255)
+Input.TextSize = 16.000
+Input.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+Input.TextStrokeTransparency = 0.000
+Input.TextXAlignment = Enum.TextXAlignment.Left
+Input.TextYAlignment = Enum.TextYAlignment.Top
+
+ExecuteBtn.Name = "ExecuteBtn"
+ExecuteBtn.Parent = MainFrame
+ExecuteBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ExecuteBtn.BorderColor3 = Color3.fromRGB(255, 16, 20)
+ExecuteBtn.BorderSizePixel = 2
+ExecuteBtn.Position = UDim2.new(0.0155038759, 0, 0.889908254, 0)
+ExecuteBtn.Size = UDim2.new(0.265116274, 0, 0.0917431191, 0)
+ExecuteBtn.ZIndex = 2
+ExecuteBtn.Font = Enum.Font.SourceSans
+ExecuteBtn.Text = "Execute"
+ExecuteBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExecuteBtn.TextScaled = true
+ExecuteBtn.TextSize = 14.000
+ExecuteBtn.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+ExecuteBtn.TextStrokeTransparency = 0.000
+ExecuteBtn.TextWrapped = true
+
+ClearBtn.Name = "ClearBtn"
+ClearBtn.Parent = MainFrame
+ClearBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ClearBtn.BorderColor3 = Color3.fromRGB(255, 16, 20)
+ClearBtn.BorderSizePixel = 2
+ClearBtn.Position = UDim2.new(0.291472882, 0, 0.889908254, 0)
+ClearBtn.Size = UDim2.new(0.265116274, 0, 0.0917431191, 0)
+ClearBtn.ZIndex = 2
+ClearBtn.Font = Enum.Font.SourceSans
+ClearBtn.Text = "Clear"
+ClearBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearBtn.TextScaled = true
+ClearBtn.TextSize = 14.000
+ClearBtn.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+ClearBtn.TextStrokeTransparency = 0.000
+ClearBtn.TextWrapped = true
+
+ResetBtn.Name = "ResetBtn"
+ResetBtn.Parent = MainFrame
+ResetBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ResetBtn.BorderColor3 = Color3.fromRGB(255, 16, 20)
+ResetBtn.BorderSizePixel = 2
+ResetBtn.Position = UDim2.new(0.568992257, 0, 0.889908254, 0)
+ResetBtn.Size = UDim2.new(0.215503871, 0, 0.0917431191, 0)
+ResetBtn.ZIndex = 2
+ResetBtn.Font = Enum.Font.SourceSans
+ResetBtn.Text = "Reset Character"
+ResetBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ResetBtn.TextScaled = true
+ResetBtn.TextSize = 14.000
+ResetBtn.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+ResetBtn.TextStrokeTransparency = 0.000
+ResetBtn.TextWrapped = true
+
+R6Btn.Name = "R6Btn"
+R6Btn.Parent = MainFrame
+R6Btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+R6Btn.BorderColor3 = Color3.fromRGB(255, 16, 20)
+R6Btn.BorderSizePixel = 2
+R6Btn.Position = UDim2.new(0.798449636, 0, 0.889908254, 0)
+R6Btn.Size = UDim2.new(0.186046511, 0, 0.0917431191, 0)
+R6Btn.ZIndex = 2
+R6Btn.Font = Enum.Font.SourceSans
+R6Btn.Text = "R6 Character"
+R6Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+R6Btn.TextScaled = true
+R6Btn.TextSize = 14.000
+R6Btn.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+R6Btn.TextStrokeTransparency = 0.000
+R6Btn.TextWrapped = true
+
+ResetAllBtn.Name = "ResetAllBtn"
+ResetAllBtn.Parent = MainFrame
+ResetAllBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ResetAllBtn.BorderColor3 = Color3.fromRGB(255, 16, 20)
+ResetAllBtn.BorderSizePixel = 2
+ResetAllBtn.Position = UDim2.new(0.0155038759, 0, 0.0214067269, 0)
+ResetAllBtn.Size = UDim2.new(0.186046511, 0, 0.0917431191, 0)
+ResetAllBtn.ZIndex = 2
+ResetAllBtn.Font = Enum.Font.SourceSans
+ResetAllBtn.Text = "Reset all"
+ResetAllBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ResetAllBtn.TextScaled = true
+ResetAllBtn.TextSize = 14.000
+ResetAllBtn.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+ResetAllBtn.TextStrokeTransparency = 0.000
+ResetAllBtn.TextWrapped = true
+
+IconBtn.Name = "IconBtn"
+IconBtn.Parent = GuiV1
+IconBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+IconBtn.BorderColor3 = Color3.fromRGB(255, 0, 4)
+IconBtn.BorderSizePixel = 2
+IconBtn.Position = UDim2.new(0.478831232, 0, 0.0226415098, 0)
+IconBtn.Size = UDim2.new(0.0417412035, 0, 0.0880503133, 0)
+IconBtn.Font = Enum.Font.SourceSans
+IconBtn.Text = ""
+IconBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+IconBtn.TextSize = 14.000
+IconBtn.Active = true
+IconBtn.Selectable = true
+IconBtn.Draggable = true
+
+ImageLabel_2.Parent = IconBtn
+ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel_2.BackgroundTransparency = 1.000
+ImageLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ImageLabel_2.BorderSizePixel = 0
+ImageLabel_2.Size = UDim2.new(1, 0, 1, 0)
+ImageLabel_2.Image = "rbxassetid://8408806737"
+
+function ExecuteScript()
+	local code = Input.Text
+	local func, err = loadstring(code)
+	
+	if not func then
+		warn(err)
+		return
+	end
+	if func then
+		func()
+	end
+end
+
+local function ClearText()
+	local Source = Input
+	Source.Text = ""
+end
+
+local function ResetCharacter()
+	local plr = game.Players.LocalPlayer
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	char:BreakJoints()
+end
+
+local function ResetAllCharacter()
+	for _, plr in pairs(game.Players:GetPlayers()) do
+		if plr.Character then
+			plr.Character:BreakJoints()
+		end
+	end
+end
+
+local function CustomizeIcon()
+	if MainFrame.Visible == true then
+		MainFrame.Visible = false
+	else
+		MainFrame.Visible = true
+	end
+end
+
+ResetAllBtn.MouseButton1Click:Connect(function()
+	ResetAllCharacter()
+end)
+
+ResetBtn.MouseButton1Click:Connect(function()
+	ResetCharacter()
+end)
+
+ClearBtn.MouseButton1Click:Connect(function()
+	ClearText() 
+end)
+
+ExecuteBtn.MouseButton1Click:Connect(function()
+	ExecuteScript()
+end)
+
+IconBtn.MouseButton1Click:Connect(function()
+	CustomizeIcon()
+end)
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "c00lsound ID menu",
+    Callback = function()
+	local gui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("SoundGui")
+	if gui then
+		gui:Destroy()
+		return
+	end
+	local SoundGui = Instance.new("ScreenGui")
+	local Frame = Instance.new("Frame")
+	local AddSoundId = Instance.new("TextButton")
+	local SoundIds = Instance.new("TextBox")
+	local Default = Instance.new("TextButton")
+	local Credits = Instance.new("TextLabel")
+	local Title = Instance.new("TextLabel")
+	local Swap = Instance.new("ImageButton")
+	local PlayBackSpeed = Instance.new("TextBox")
+	local Volume = Instance.new("TextBox")
+	local Looped = Instance.new("TextBox")
+	local Exit = Instance.new("ImageButton")
+	local Frame2 = Instance.new("Frame")
+	local Open = Instance.new("ImageButton")
+	local spoky = Instance.new("Sound")
+	local c00lflag = Instance.new("Sound")
+	local drag = Instance.new("UIDragDetector")
+	drag.Parent = Frame
+	c00lflag.Name = "c00lsound23sas"
+	c00lflag.Parent = Frame
+	spoky.Parent = Frame
+	spoky.SoundId = "rbxassetid://95156028272944"
+	spoky.Volume = 3
+	spoky.PlaybackSpeed = 0.2
+	spoky.Name = "spoky"
+	--Properties:
+
+	SoundGui.Name = "SoundGui"
+	SoundGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	SoundGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	SoundGui.ResetOnSpawn = false
+
+	Frame.Parent = SoundGui
+	Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Frame.BorderColor3 = Color3.fromRGB(255, 0, 4)
+	Frame.BorderSizePixel = 2
+	Frame.Position = UDim2.new(0, 700, 0, 300)
+	Frame.Size = UDim2.new(0, 398, 0, 206)
+
+	AddSoundId.Name = "AddSoundId"
+	AddSoundId.Parent = Frame
+	AddSoundId.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	AddSoundId.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	AddSoundId.BorderSizePixel = 2
+	AddSoundId.Position = UDim2.new(0.118090451, 0, 0.718446612, 0)
+	AddSoundId.Size = UDim2.new(0, 307, 0, 36)
+	AddSoundId.Font = Enum.Font.Arial
+	AddSoundId.Text = "Add Sound!"
+	AddSoundId.TextColor3 = Color3.fromRGB(255, 255, 255)
+	AddSoundId.TextSize = 29.000
+
+	SoundIds.Name = "SoundIds"
+	SoundIds.Parent = Frame
+	SoundIds.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	SoundIds.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	SoundIds.BorderSizePixel = 2
+	SoundIds.Position = UDim2.new(0.118090451, 0, 0.305825233, 0)
+	SoundIds.Size = UDim2.new(0, 307, 0, 33)
+	SoundIds.Font = Enum.Font.Arial
+	SoundIds.PlaceholderText = "Add a sound ID here!, No rbx://"
+	SoundIds.Text = ""
+	SoundIds.TextColor3 = Color3.fromRGB(255, 255, 255)
+	SoundIds.TextScaled = true
+	SoundIds.TextSize = 14.000
+	SoundIds.TextWrapped = true
+
+	Default.Name = "Default"
+	Default.Parent = Frame
+	Default.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Default.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Default.BorderSizePixel = 2
+	Default.Position = UDim2.new(0.118090451, 0, 0.529126227, 0)
+	Default.Size = UDim2.new(0, 307, 0, 28)
+	Default.Font = Enum.Font.Arial
+	Default.Text = "Spooky Scary Skeletons!"
+	Default.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Default.TextSize = 23.000
+
+	Credits.Name = "Credits"
+	Credits.Parent = Frame
+	Credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Credits.BackgroundTransparency = 1.000
+	Credits.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Credits.BorderSizePixel = 0
+	Credits.Position = UDim2.new(0.577889442, 0, 0.9174757, 0)
+	Credits.Size = UDim2.new(0, 153, 0, 17)
+	Credits.Font = Enum.Font.SourceSans
+	Credits.Text = "made by: 1known. On discord!"
+	Credits.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Credits.TextSize = 14.000
+
+	Title.Name = "Title"
+	Title.Parent = Frame
+	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title.BackgroundTransparency = 1.000
+	Title.BorderColor3 = Color3.fromRGB(255, 0, 4)
+	Title.BorderSizePixel = 2
+	Title.Position = UDim2.new(0.208542719, 0, 0.0291262139, 0)
+	Title.Size = UDim2.new(0, 231, 0, 48)
+	Title.Font = Enum.Font.Arial
+	Title.Text = "c00lSound GUI!"
+	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title.TextSize = 33.000
+	Title.TextWrapped = true
+
+	Swap.Name = "Swap"
+	Swap.Parent = Frame
+	Swap.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Swap.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Swap.BorderSizePixel = 0
+	Swap.Position = UDim2.new(0.904522598, 0, 0.33495146, 0)
+	Swap.Size = UDim2.new(0, 23, 0, 21)
+	Swap.Image = "rbxassetid://2500573769"
+
+	PlayBackSpeed.Name = "PlayBackSpeed"
+	PlayBackSpeed.Parent = Frame
+	PlayBackSpeed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	PlayBackSpeed.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	PlayBackSpeed.BorderSizePixel = 2
+	PlayBackSpeed.Position = UDim2.new(0.118090451, 0, 0.305825233, 0)
+	PlayBackSpeed.Size = UDim2.new(0, 307, 0, 33)
+	PlayBackSpeed.Visible = false
+	PlayBackSpeed.Font = Enum.Font.Arial
+	PlayBackSpeed.PlaceholderText = "Playback speed, Enter a number!"
+	PlayBackSpeed.Text = "1"
+	PlayBackSpeed.TextColor3 = Color3.fromRGB(255, 255, 255)
+	PlayBackSpeed.TextScaled = true
+	PlayBackSpeed.TextSize = 14.000
+	PlayBackSpeed.TextWrapped = true
+
+	Volume.Name = "Volume"
+	Volume.Parent = Frame
+	Volume.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Volume.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Volume.BorderSizePixel = 2
+	Volume.Position = UDim2.new(0.118090451, 0, 0.305825233, 0)
+	Volume.Size = UDim2.new(0, 307, 0, 33)
+	Volume.Visible = false
+	Volume.Font = Enum.Font.Arial
+	Volume.PlaceholderText = "Volume! Enter a number."
+	Volume.Text = "0.5"
+	Volume.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Volume.TextScaled = true
+	Volume.TextSize = 14.000
+	Volume.TextWrapped = true
+
+	Looped.Name = "Looped"
+	Looped.Parent = Frame
+	Looped.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Looped.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Looped.BorderSizePixel = 2
+	Looped.Position = UDim2.new(0.118090451, 0, 0.305825233, 0)
+	Looped.Size = UDim2.new(0, 307, 0, 33)
+	Looped.Visible = false
+	Looped.Font = Enum.Font.Arial
+	Looped.PlaceholderText = "Is it looped?, Type: False or True"
+	Looped.Text = "False"
+	Looped.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Looped.TextScaled = true
+	Looped.TextSize = 14.000
+	Looped.TextWrapped = true
+
+	Exit.Name = "Exit"
+	Exit.Parent = Frame
+	Exit.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Exit.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Exit.BorderSizePixel = 2
+	Exit.Position = UDim2.new(0.921999991, 0, 0.0289999992, 0)
+	Exit.Size = UDim2.new(0, 25, 0, 23)
+	Exit.Image = "rbxassetid://14930908086"
+
+	Frame2.Name = "Frame2"
+	Frame2.Parent = SoundGui
+	Frame2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Frame2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Frame2.BorderSizePixel = 0
+	Frame2.Position = UDim2.new(0.984443069, 0, 0.841666639, 0)
+	Frame2.Size = UDim2.new(0, 25, 0, 23)
+	Frame2.Visible = false
+
+	Open.Name = "Open"
+	Open.Parent = Frame2
+	Open.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Open.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Open.BorderSizePixel = 2
+	Open.Position = UDim2.new(-0.0312646478, 0, -0.0113339629, 0)
+	Open.Size = UDim2.new(0, 25, 0, 23)
+	Open.Image = "rbxassetid://14930908086"
+
+	-- Scripts:
+
+	local function GSSVM_fake_script() -- AddSoundId.LocalScript 
+		local script = Instance.new('LocalScript', AddSoundId)
+
+		local parent = script.Parent
+
+		parent.Activated:Connect(function()
+			local SoundId = parent.Parent:WaitForChild("SoundIds").Text
+			local Playbackspeed = parent.Parent:WaitForChild("PlayBackSpeed").Text
+			local Volume = parent.Parent:WaitForChild("Volume").Text
+			local looped = parent.Parent:WaitForChild("Looped").Text
+			if SoundId == "" then
+				parent.Text = "No Sound ID!"
+				wait(2)
+				parent.Text = "Add Sound!"
+				return
+			end
+
+			local id = "rbxassetid://" .. SoundId
+			local speed = tonumber(Playbackspeed) or 1
+			local existingSound = game.Workspace:FindFirstChild("c00lsound23sas")
+
+			if existingSound then
+				existingSound.SoundId = id
+				existingSound.PlaybackSpeed = speed
+				existingSound.Volume = Volume
+				if looped == "False" then
+					existingSound.Looped = false
+				elseif looped == "True"	then
+					existingSound.Looped = true
+				else
+					existingSound.Looped = false
+				end
+				existingSound:Play()
+			else
+				local clonedSound = parent.Parent.c00lsound23sas:Clone()
+				clonedSound.Parent = game.Workspace
+				clonedSound.SoundId = id
+				clonedSound.PlaybackSpeed = speed
+				clonedSound.Volume = Volume
+				if looped == "False" then
+					clonedSound.Looped = false
+				elseif looped == "True"	then
+					clonedSound.Looped = true
+				else
+					clonedSound.Looped = false
+				end
+				clonedSound.Looped = looped
+
+				clonedSound:Play()
+			end
+
+			parent.Text = "Injected Sound Succesfully!, Be sure to enter a correct ID if it doesnt work!"
+			parent.TextScaled = true
+			wait(3.5)
+			parent.TextScaled = false
+			parent.Text = "Add Sound!"
+		end)
+
+	end
+	coroutine.wrap(GSSVM_fake_script)()
+	local function MWUVEW_fake_script() -- Default.LocalScript 
+		local script = Instance.new('LocalScript', Default)
+
+		local parent = script.Parent
+		local sound = parent.Parent.spoky
+
+		parent.Activated:Connect(function()
+			if sound.Playing == true then
+				sound.Playing = false
+			else
+				sound.Playing = true
+			end
+		end)
+	end
+	coroutine.wrap(MWUVEW_fake_script)()
+	local function BIKZQ_fake_script() -- Swap.LocalScript 
+		local script = Instance.new('LocalScript', Swap)
+
+		local parent = script.Parent
+		local playback = parent.Parent.PlayBackSpeed
+		local Sound = parent.Parent.SoundIds
+		local volume = parent.Parent.Volume
+		local looped = parent.Parent.Looped
+		parent.Activated:Connect(function()
+			if Sound.Visible == true then
+				Sound.Visible = false
+				playback.Visible = true
+				volume.Visible = false
+				looped.Visible = false
+
+			elseif playback.Visible ==true then
+				playback.Visible = false
+				Sound.Visible = false
+				volume.Visible = true
+				looped.Visible = false
+
+			elseif volume.Visible == true then
+				Sound.Visible = false
+				playback.Visible = false
+				volume.Visible = false
+				looped.Visible = true
+			elseif looped.Visible == true then
+				Sound.Visible = true
+				playback.Visible = false
+				volume.Visible = false
+				looped.Visible = false
+			end
+		end)
+	end
+  end
+  })
+    AddButton(Tab2o, {
+     Name = "ERR server sdie",
+    Callback = function()
+--[=[
+ d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
+88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
+88      88    88    88            odD'      88      88    88 88ooo88 
+88  ooo 88    88    88          .88'        88      88    88 88~~~88 
+88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
+ Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
+]=]
+
+-- Instances: 14 | Scripts: 1 | Modules: 0 | Tags: 0
+local G2L = {};
+
+-- StarterGui.ScreenGui
+G2L["1"] = Instance.new("ScreenGui", game.CoreGui);
+G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+
+
+-- StarterGui.ScreenGui.OK
+G2L["2"] = Instance.new("Frame", G2L["1"]);
+G2L["2"]["BorderSizePixel"] = 0;
+G2L["2"]["BackgroundColor3"] = Color3.fromRGB(58, 60, 62);
+G2L["2"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["2"]["Size"] = UDim2.new(0, 402, -0.07476, 244);
+G2L["2"]["Position"] = UDim2.new(0.5, 0, 0.53326, 0);
+G2L["2"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["2"]["Name"] = [[OK]];
+
+
+-- StarterGui.ScreenGui.OK.Element
+G2L["3"] = Instance.new("Frame", G2L["2"]);
+G2L["3"]["BorderSizePixel"] = 0;
+G2L["3"]["BackgroundColor3"] = Color3.fromRGB(239, 248, 255);
+G2L["3"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["3"]["Size"] = UDim2.new(-0.02, 402, 0.03, 201);
+G2L["3"]["Position"] = UDim2.new(0.5, 0, 0.49957, 0);
+G2L["3"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["3"]["Name"] = [[Element]];
+G2L["3"]["BackgroundTransparency"] = 0.95;
+
+
+-- StarterGui.ScreenGui.OK.Element.UIGradient
+G2L["4"] = Instance.new("UIGradient", G2L["3"]);
+G2L["4"]["Rotation"] = -136;
+G2L["4"]["Transparency"] = NumberSequence.new{NumberSequenceKeypoint.new(0.000, 0),NumberSequenceKeypoint.new(0.414, 0),NumberSequenceKeypoint.new(0.422, 1),NumberSequenceKeypoint.new(1.000, 1)};
+
+
+-- StarterGui.ScreenGui.OK.Element.Say
+G2L["5"] = Instance.new("TextLabel", G2L["3"]);
+G2L["5"]["BorderSizePixel"] = 0;
+G2L["5"]["TextSize"] = 25;
+G2L["5"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["5"]["TextTransparency"] = 0.7;
+G2L["5"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["5"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["BackgroundTransparency"] = 1;
+G2L["5"]["Size"] = UDim2.new(-0.1, 200, -0.08554, 50);
+G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5"]["Text"] = [[Best and Fastest Backdoor Exe]];
+G2L["5"]["Name"] = [[Say]];
+G2L["5"]["Position"] = UDim2.new(0.06229, 0, 0.20771, 0);
+
+
+-- StarterGui.ScreenGui.OK.Element.Bar1
+G2L["6"] = Instance.new("Frame", G2L["3"]);
+G2L["6"]["BorderSizePixel"] = 0;
+G2L["6"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["6"]["Size"] = UDim2.new(0, 238, 0, 6);
+G2L["6"]["Position"] = UDim2.new(0.0398, 0, 0.91156, 0);
+G2L["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["6"]["Name"] = [[Bar1]];
+G2L["6"]["BackgroundTransparency"] = 0.8;
+
+
+-- StarterGui.ScreenGui.OK.Element.Bar1.Bar2
+G2L["7"] = Instance.new("Frame", G2L["6"]);
+G2L["7"]["BorderSizePixel"] = 0;
+G2L["7"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["7"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["7"]["Size"] = UDim2.new(0, 0, 0, 6);
+G2L["7"]["Position"] = UDim2.new(0, 0, 0.703, 0);
+G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["7"]["Name"] = [[Bar2]];
+G2L["7"]["BackgroundTransparency"] = 0.8;
+
+
+-- StarterGui.ScreenGui.OK.Element.Bar1.Bar2.LocalScript
+G2L["8"] = Instance.new("LocalScript", G2L["7"]);
+
+
+
+-- StarterGui.ScreenGui.OK.Element.Bar1.UIListLayout
+G2L["9"] = Instance.new("UIListLayout", G2L["6"]);
+G2L["9"]["VerticalAlignment"] = Enum.VerticalAlignment.Center;
+G2L["9"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+
+-- StarterGui.ScreenGui.OK.Element.Creator
+G2L["a"] = Instance.new("TextLabel", G2L["3"]);
+G2L["a"]["TextWrapped"] = true;
+G2L["a"]["BorderSizePixel"] = 0;
+G2L["a"]["TextSize"] = 18;
+G2L["a"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["a"]["TextTransparency"] = 0.7;
+G2L["a"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["a"]["TextScaled"] = true;
+G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["a"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["a"]["BackgroundTransparency"] = 1;
+G2L["a"]["Size"] = UDim2.new(-0.18706, 200, -0.15717, 50);
+G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["a"]["Text"] = [[Developed by Error422MC];
+G2L["a"]["Name"] = [[Creator]];
+G2L["a"]["Position"] = UDim2.new(0.66393, 0, 0.87074, 0);
+
+
+-- StarterGui.ScreenGui.OK.Element.ASL
+G2L["b"] = Instance.new("TextLabel", G2L["3"]);
+G2L["b"]["BorderSizePixel"] = 0;
+G2L["b"]["TextSize"] = 39;
+G2L["b"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["b"]["TextTransparency"] = 0.7;
+G2L["b"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["b"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["b"]["BackgroundTransparency"] = 1;
+G2L["b"]["Size"] = UDim2.new(-0.1, 200, -0.08554, 50);
+G2L["b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["b"]["Text"] = [[ERROR.exe]];
+G2L["b"]["Name"] = [[ASL]];
+G2L["b"]["Position"] = UDim2.new(0.06229, 0, 0.06487, 0);
+
+
+-- StarterGui.ScreenGui.Ops
+G2L["c"] = Instance.new("Frame", G2L["1"]);
+G2L["c"]["BorderSizePixel"] = 0;
+G2L["c"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["c"]["Size"] = UDim2.new(0.99182, 1, 0.97679, 1);
+G2L["c"]["Position"] = UDim2.new(0.00818, 0, 0, 0);
+G2L["c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["c"]["Name"] = [[Ops]];
+G2L["c"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.ScreenGui.Ops.UIListLayout
+G2L["d"] = Instance.new("UIListLayout", G2L["c"]);
+G2L["d"]["VerticalAlignment"] = Enum.VerticalAlignment.Bottom;
+G2L["d"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+
+-- StarterGui.ScreenGui.Ops.ASL
+G2L["e"] = Instance.new("TextLabel", G2L["c"]);
+G2L["e"]["TextWrapped"] = true;
+G2L["e"]["BorderSizePixel"] = 0;
+G2L["e"]["TextSize"] = 39;
+G2L["e"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["e"]["TextTransparency"] = 1;
+G2L["e"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["TextScaled"] = true;
+G2L["e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["BackgroundTransparency"] = 1;
+G2L["e"]["Size"] = UDim2.new(-0.08435, 200, -0.06056, 50);
+G2L["e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["e"]["Text"] = [[ERROR.exe]];
+G2L["e"]["Name"] = [[ASL]];
+G2L["e"]["Position"] = UDim2.new(0, 0, 0.98149, 0);
+
+
+-- StarterGui.ScreenGui.OK.Element.Bar1.Bar2.LocalScript
+local function C_8()
+local script = G2L["8"];
+	local bar2 = script.Parent
+	
+	if not game:IsLoaded() then
+		game.Loaded:Wait()
+	end
+	
+	wait(2)
+	
+	bar2:TweenSize(
+		UDim2.new(0, 238, 0, 8),
+		Enum.EasingDirection.Out,
+		Enum.EasingStyle.Quad,
+		0.5,
+		true
+	)
+	
+	wait(1)
+	
+	script.Parent.Parent.Parent.Parent:TweenPosition(UDim2.new(0.5, 0,1.47, 0))
+	
+	for i = 1, 0.7, -0.1 do
+		script.Parent.Parent.Parent.Parent.Parent.Ops.ASL.TextTransparency = i
+		wait(0.05)
+		
+		script.Parent.Parent.Parent.Parent.Parent.Ops.ASL:TweenSize(UDim2.new(0, 200,-0.016, 50))
+	end
+	
+	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/G4mg1/newone/refs/heads/main/README.md"))()
+end;
+task.spawn(C_8);
+
+return G2L["1"], require;
+  end
+  })
+    AddButton(Tab2o, {
+     Name = "Starlight ServerSided",
+    Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-starlight-archive-46524"))()
+  end
+  })
+    AddButton(Tab2o, {
+     Name = "Backdoor.exe v6x",
+    Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Backdoor-exe-9413"))()
+  end
+  })
+    AddButton(Tab2o, {
+     Name = "Backdoor.exe v8",
+    Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-backdoor.exe-3959"))()
+  end
+  })
+    AddButton(Tab2o, {
+     Name = "Scream SS",
+    Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-backdoor.exe-3959"))()
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "SERVERSIDIE OR FE BPASS EXECUTOR",
+    Callback = function()
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Main GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "ExecutorGUI"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+-- Toggle Button
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 100, 0, 30)
+toggleButton.Position = UDim2.new(0, 10, 0, 10)
+toggleButton.Text = "TOGGLE"
+toggleButton.Font = Enum.Font.LuckiestGuy
+toggleButton.TextSize = 14
+toggleButton.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.Parent = gui
+
+-- Main Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 350, 0, 200)
+frame.Position = UDim2.new(0.5, -175, 0.5, -100)
+frame.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Visible = true
+frame.Parent = gui
+
+-- Toggle Function
+toggleButton.MouseButton1Click:Connect(function()
+	frame.Visible = not frame.Visible
+end)
+
+-- Title Label
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "SERVERSIDE OR FE BYPASS EXECUTOR"
+title.Font = Enum.Font.LuckiestGuy
+title.TextSize = 18
+title.TextColor3 = Color3.new(1, 1, 1)
+title.Parent = frame
+
+-- Input Box
+local inputBox = Instance.new("TextBox")
+inputBox.Size = UDim2.new(1, -20, 0, 40)
+inputBox.Position = UDim2.new(0, 10, 0, 40)
+inputBox.PlaceholderText = "ENTER REQUIRE"
+inputBox.Text = ""
+inputBox.ClearTextOnFocus = false
+inputBox.TextColor3 = Color3.new(0, 0, 0)
+inputBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+inputBox.TextWrapped = true
+inputBox.Font = Enum.Font.LuckiestGuy
+inputBox.TextSize = 14
+inputBox.TextXAlignment = Enum.TextXAlignment.Center
+inputBox.TextYAlignment = Enum.TextYAlignment.Center
+inputBox.Parent = frame
+
+-- Clear Button
+local clearButton = Instance.new("TextButton")
+clearButton.Size = UDim2.new(1, -20, 0, 35)
+clearButton.Position = UDim2.new(0, 10, 0, 90)
+clearButton.Text = "CLEAR"
+clearButton.Font = Enum.Font.LuckiestGuy
+clearButton.TextSize = 18
+clearButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+clearButton.TextColor3 = Color3.new(1, 1, 1)
+clearButton.Parent = frame
+
+-- Execute Button
+local executeButton = Instance.new("TextButton")
+executeButton.Size = UDim2.new(1, -20, 0, 35)
+executeButton.Position = UDim2.new(0, 10, 0, 135)
+executeButton.Text = "EXECUTE REQUIRE"
+executeButton.Font = Enum.Font.LuckiestGuy
+executeButton.TextSize = 18
+executeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+executeButton.TextColor3 = Color3.new(1, 1, 1)
+executeButton.Parent = frame
+
+-- Clear Function
+clearButton.MouseButton1Click:Connect(function()
+	inputBox.Text = ""
+end)
+
+-- Execute Function
+executeButton.MouseButton1Click:Connect(function()
+	local scriptText = inputBox.Text
+	local assetId = scriptText:match("require%s*%(?%s*(%d+)%s*%)?")
+
+	if assetId then
+		local success, result = pcall(function()
+			local objects = game:GetObjects("rbxassetid://" .. assetId)
+			local obj = objects[1]
+			if obj then
+				obj.Parent = playerGui
+				if obj:IsA("ModuleScript") then
+					local modSuccess, modResult = pcall(function()
+						return require(obj)
+					end)
+					if not modSuccess then
+						warn("Error requiring module:", modResult)
+					end
+				end
+			end
+		end)
+		if not success then
+			warn("Error loading asset:", result)
+		end
+	else
+		warn("Invalid require() syntax.")
+	end
+end)
+local StigmanFroud = Instance.new("ScreenGui")
+local trajectory = Instance.new("ImageLabel")
+local R = Instance.new("ImageLabel")
+local Earth = Instance.new("ImageLabel")
+local Green = Instance.new("ImageLabel")
+
+StigmanFroud.Name = "Stigman Froud"
+StigmanFroud.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+StigmanFroud.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+StigmanFroud.DisplayOrder = 999
+StigmanFroud.ResetOnSpawn = false
+
+trajectory.Name = "trajectory"
+trajectory.Parent = StigmanFroud
+trajectory.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+trajectory.BackgroundTransparency = 1.000
+trajectory.Position = UDim2.new(0.45430705, 0, 0.430432826, 0)
+trajectory.Size = UDim2.new(0, 110, 0, 110)
+trajectory.Image = "http://www.roblox.com/asset/?id=7102118272"
+trajectory.SliceScale = 3.000
+
+R.Name = "R"
+R.Parent = StigmanFroud
+R.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+R.BackgroundTransparency = 1.000
+R.Position = UDim2.new(0.45430705, 0, 0.430432826, 0)
+R.Size = UDim2.new(0, 110, 0, 110)
+R.ZIndex = 3
+R.Image = "http://www.roblox.com/asset/?id=7102117818"
+R.SliceScale = 3.000
+
+Earth.Name = "Earth"
+Earth.Parent = R
+Earth.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Earth.BackgroundTransparency = 1.000
+Earth.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Earth.BorderSizePixel = 0
+Earth.Position = UDim2.new(0.404999346, 0, 0.406818181, 0)
+Earth.Size = UDim2.new(0, 20, 0, 20)
+Earth.ZIndex = 4
+Earth.Image = "rbxassetid://78137783929126"
+
+Green.Name = "Green"
+Green.Parent = StigmanFroud
+Green.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Green.BackgroundTransparency = 1.000
+Green.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Green.BorderSizePixel = 0
+Green.Position = UDim2.new(0.00499999989, 0, 0.824999988, 0)
+Green.Size = UDim2.new(0, 110, 0, 110)
+Green.ZIndex = 6
+Green.Image = "rbxassetid://75554667916597"
+Green.ImageTransparency = 1.000
+
+-- Animation for trajectory (rotating)
+local function AARC_fake_script()
+	local script = Instance.new('LocalScript', trajectory)
+	local img = script.Parent
+	local sonic = script.Parent
+	
+	img:TweenPosition(UDim2.new(0.451, 0, 0.395, 0), "Out", "Linear", 0.4, false)
+	wait(3)
+	img:TweenPosition(UDim2.new(0.005, 0, 0.619, 0), "Out", "Sine", 0.7, false)
+	
+	while true do
+		wait(0.01)
+		sonic.Rotation = sonic.Rotation + 0.3
+	end
+end
+coroutine.wrap(AARC_fake_script)()
+
+-- Animation for Earth (orbiting)
+local function LQERQ_fake_script()
+	local script = Instance.new('LocalScript', Earth)
+	local Angle = 0
+	local AngleIncrement = 0.02
+	local OriginPos = script.Parent.Position
+	local Distance = 55
+	
+	while wait() do
+		Angle = Angle + AngleIncrement
+		local dirX = math.cos(Angle)
+		local dirY = math.sin(Angle)
+		script.Parent.Position = OriginPos + UDim2.new(0, dirX * Distance, 0, dirY * Distance)
+	end
+end
+coroutine.wrap(LQERQ_fake_script)()
+
+-- Animation for R (tween in and down)
+local function XBQODE_fake_script()
+	local script = Instance.new('LocalScript', R)
+	local img = script.Parent
+	
+	img:TweenPosition(UDim2.new(0.451, 0, 0.395, 0), "Out", "Linear", 0.4, false)
+	wait(3)
+	img:TweenPosition(UDim2.new(0.005, 0, 0.619, 0), "Out", "Sine", 0.7, false)
+end
+coroutine.wrap(XBQODE_fake_script)()
+
+-- Blinking Green effect
+local function NSHDR_fake_script()
+	local script = Instance.new('LocalScript', Green)
+	local Tween = game:GetService("TweenService")
+	local Greenfn = script.Parent
+	wait(2)
+	while true do
+		local TranspncyTween = Tween:Create(Greenfn, TweenInfo.new(0.5), {ImageTransparency = 0})
+		TranspncyTween:Play()
+		wait(0.3)
+		TranspncyTween = Tween:Create(Greenfn, TweenInfo.new(0.5), {ImageTransparency = 1})
+		TranspncyTween:Play()
+		wait(0.3)
+		TranspncyTween = Tween:Create(Greenfn, TweenInfo.new(0.5), {ImageTransparency = 0})
+		TranspncyTween:Play()
+		wait(0.3)
+		TranspncyTween = Tween:Create(Greenfn, TweenInfo.new(0.5), {ImageTransparency = 1})
+		TranspncyTween:Play()
+		wait(4)
+	end
+end
+coroutine.wrap(NSHDR_fake_script)()
+
+-- Tweening animation for Green (initial move)
+local function UDIRPT_fake_script()
+	local script = Instance.new('LocalScript', Green)
+	local img = script.Parent
+	
+	img:TweenPosition(UDim2.new(0.451, 0, 0.395, 0), "Out", "Linear", 0.4, false)
+	wait(3)
+	img:TweenPosition(UDim2.new(0.005, 0, 0.619, 0), "Out", "Sine", 0.7, false)
+end
+coroutine.wrap(UDIRPT_fake_script)()
+
+-- Output welcome and game name
+local function WGFAMY_fake_script()
+	local script = Instance.new('LocalScript', StigmanFroud)
+	local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+	
+	print("Loaded At", GetName.Name)
+	wait(0.1)
+	print("Welcome,", game.Players.LocalPlayer.Name)
+end
+  end
+  })
+    AddButton(Tab1o, {
+     Name = "IY",
+    Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "SCP-106.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/SCP-106"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "GONER.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/My-Converts/refs/heads/main/Goner.lua"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "DEVOYANCE.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Devoyance"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "HACKER X.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Hacker%20X"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "MJOLNIR.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://pastefy.app/JWZk5sQi/raw"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "BACKFIGURE.TXT",
+    Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Figure"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "C4 COMBO.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://pastefy.app/M0r9UCNQ/raw"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "I AM STEVE.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Steve-script-24707"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "LL SEEING HAND",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Flowey"))()
+  end
+  })
+     AddButton(Tab3o, {
+     Name = "PATRICK.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Patrick"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "SHRIKE.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Shrike"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "POLYGONER. TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Polygoner"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "FRIDGE.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/Fridge"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "SOULREAPER. TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/mizu-dump/Lua2Loadstring/main/Main/Soulreaper.lua"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "CHONO-SENTINEL.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Lock1213/Scripts/refs/heads/main/Chrono%20Sentinel%20(Converted%20With%20Music"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "VODI GUARDIAN.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/void"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "BIND REAPEP.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ian49972/SCRIPTS/refs/heads/main/BLINDREAPER"))()
+  end
+  })
+    AddButton(Tab3o, {
+     Name = "RAVAGER.TXT",
+    Callback = function()  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/mizu-dump/Lua2Loadstring/main/Main/revenger.%20Lua.lua"))()
+  end
+  })
