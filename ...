@@ -1,0 +1,12 @@
+local id = 135940837752529
+
+for _, v in ipairs(workspace:GetDescendants()) do
+    if v:IsA("BasePart") then
+        local p = Instance.new("ParticleEmitter")
+        p.Texture = "rbxassetid://" .. id
+        p.Rate = 150
+        p.Speed = NumberRange.new(20)
+        p.Lifetime = NumberRange.new(2)
+        p.Parent = v
+    end
+end
