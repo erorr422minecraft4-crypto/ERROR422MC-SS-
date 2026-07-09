@@ -1,0 +1,57 @@
+-- 666.lua
+
+for _,v in ipairs(workspace:GetDescendants()) do
+    if v:IsA("BasePart") then
+        local bbg = Instance.new("BillboardGui")
+        bbg.Name = "stuf"
+        bbg.Adornee = v
+        bbg.Size = UDim2.new(2.5,0,2.5,0)
+        bbg.Parent = v
+
+        local tlb = Instance.new("TextLabel")
+        tlb.BackgroundTransparency = 1
+        tlb.Size = UDim2.new(1.25,0,1.25,0)
+        tlb.Position = UDim2.new(-0.125,-22,-1.1,0)
+        tlb.Text = "1x1x1x1 hacked game"
+        tlb.TextColor3 = Color3.new(1,0,0)
+        tlb.Font = Enum.Font.SourceSansBold
+        tlb.TextScaled = true
+        tlb.Parent = bbg
+    end
+end
+
+local function xds(obj)
+    for _,v in ipairs(obj:GetChildren()) do
+        if v:IsA("BasePart") then
+            v.BrickColor = BrickColor.new("Really black")
+
+            local s = Instance.new("SelectionBox")
+            s.Adornee = v
+            s.Color3 = Color3.new(1,0,0)
+            s.Parent = v
+
+            local p = Instance.new("PointLight")
+            p.Color = Color3.new(1,0,0)
+            p.Range = 15
+            p.Brightness = 5
+            p.Parent = v
+
+            local f = Instance.new("Fire")
+            f.Size = 19
+            f.Heat = 22
+            f.Parent = v
+        end
+
+        if #v:GetChildren() > 0 then
+            xds(v)
+        end
+    end
+end
+
+game.Lighting.TimeOfDay = "00:00:00"
+game.Lighting.Brightness = 0
+game.Lighting.Ambient = Color3.new(1,0,0)
+game.Lighting.FogColor = Color3.new(0,0,0)
+game.Lighting.FogEnd = 200
+
+xds(workspace)
