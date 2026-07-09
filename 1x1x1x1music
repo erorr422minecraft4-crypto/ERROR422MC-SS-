@@ -1,0 +1,15 @@
+	local s = Instance.new("Sound")
+
+	s.Name = "Sound"
+	s.SoundId = "http://www.roblox.com/asset/?id=139488665764275"
+	s.Volume = 1
+	s.Pitch = 1.1
+	s.Looped = true
+	s.archivable = false
+
+	s.Parent = game.Workspace
+
+	wait(1)
+
+	s:play()
+end)
