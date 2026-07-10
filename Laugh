@@ -1,9 +1,6 @@
 local s = Instance.new("Sound")
 s.SoundId = "rbxassetid://35935204"
 s.Volume = 1
-s.Pitch = 0.9
 s.Looped = true
 s.Parent = workspace
-
-task.wait(1)
 s:Play()
