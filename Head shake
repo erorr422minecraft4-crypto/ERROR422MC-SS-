@@ -1,0 +1,34 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Root = Character:WaitForChild("HumanoidRootPart")
+local Neck = Character:FindFirstChild("Neck", true)
+local Humanoid = Character:WaitForChild("Humanoid")
+
+local YOffset = Neck.C0.Y
+local XOffset = Neck.C0.X
+local ZOffset = Neck.C0.Z
+
+local CFNew = CFrame.new
+local sin = math.sin
+local clock = os.clock
+
+-- Settings
+local distance = 0.8 -- Distance of the move
+local speed = 6   -- speed of the shake
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if not Neck then return end
+
+	
+	local sway = sin(clock() * speed) * distance
+
+	if Humanoid.RigType == Enum.HumanoidRigType.R15 then
+		Neck.C0 =
+			CFNew(XOffset + sway, YOffset, ZOffset)
+
+	elseif Humanoid.RigType == Enum.HumanoidRigType.R6 then
+		Neck.C0 =
+			CFNew(XOffset + sway, YOffset, ZOffset)
+			* CFrame.Angles(3 * math.pi / 2, 0, math.pi)
+	end
+end)
