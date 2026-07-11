@@ -1,0 +1,22 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+
+if Humanoid.RigType ~= Enum.HumanoidRigType.R6 then return end
+
+local Torso = Character:WaitForChild("Torso")
+local RightShoulder = Torso:WaitForChild("Right Shoulder")
+local LeftShoulder = Torso:WaitForChild("Left Shoulder")
+
+local CFNew, CFAng = CFrame.new, CFrame.Angles
+
+local forwardOffset = 0.5 
+
+RightShoulder.C0 =
+	CFNew(1.4, 0.5, -forwardOffset) 
+	* CFAng(0, 0, math.rad(90))
+
+LeftShoulder.C0 =
+	CFNew(-1.4, 0.5, -forwardOffset)
+	* CFAng(0, 0, math.rad(-90))
+
