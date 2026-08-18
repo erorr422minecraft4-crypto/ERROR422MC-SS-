@@ -1,0 +1,98 @@
+--[=[
+ d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
+88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
+88      88    88    88            odD'      88      88    88 88ooo88 
+88  ooo 88    88    88          .88'        88      88    88 88~~~88 
+88. \~8\~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
+ Y888P  \~Y8888P' Y888888P      888888D      Y88888P \~Y8888P' YP   YP  CONVERTER 
+
+designed using localmaze gui creator
+]=]
+
+-- Instances: 5 | Scripts: 2 | Modules: 0 | Tags: 0
+local LMG2L = {};
+
+-- ScreenGui
+LMG2L["ScreenGui_1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+LMG2L["ScreenGui_1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+LMG2L["ScreenGui_1"]["ResetOnSpawn"] = false;
+
+-- ImageLabel (fondo)
+LMG2L["ImageLabel_2"] = Instance.new("ImageLabel", LMG2L["ScreenGui_1"]);
+LMG2L["ImageLabel_2"]["BorderSizePixel"] = 0;
+LMG2L["ImageLabel_2"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["ImageLabel_2"]["Image"] = "rbxassetid://172423468";
+LMG2L["ImageLabel_2"]["Size"] = UDim2.new(0, 906, 0, 536);
+LMG2L["ImageLabel_2"]["Position"] = UDim2.new(0, -60, 0, -194);
+LMG2L["ImageLabel_2"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+
+-- TextLabel "FUCK YOU NIGGA"
+LMG2L["TextLabel_4"] = Instance.new("TextLabel", LMG2L["ImageLabel_2"]);
+LMG2L["TextLabel_4"]["BorderSizePixel"] = 0;
+LMG2L["TextLabel_4"]["TextSize"] = 18;
+LMG2L["TextLabel_4"]["BackgroundTransparency"] = 1;
+LMG2L["TextLabel_4"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+LMG2L["TextLabel_4"]["Size"] = UDim2.new(0, 182, 0, 50);
+LMG2L["TextLabel_4"]["Text"] = "FUCK YOU NIGGA🔥🔥🔥🔥";
+LMG2L["TextLabel_4"]["Name"] = "FUCK YOU NIGGA";
+LMG2L["TextLabel_4"]["Position"] = UDim2.new(0, 382, 0, 242);
+LMG2L["TextLabel_4"]["Font"] = Enum.Font.SourceSansBold;
+
+-- LocalScript (Animación)
+LMG2L["LocalScript_3"] = Instance.new("LocalScript", LMG2L["ImageLabel_2"]);
+
+-- Script de música (Sound)
+LMG2L["Sound_5"] = Instance.new("Sound", LMG2L["ScreenGui_1"]);
+LMG2L["Sound_5"]["SoundId"] = "rbxassetid://121922837560201";
+LMG2L["Sound_5"]["Volume"] = 0.7;
+LMG2L["Sound_5"]["Looped"] = true;
+
+-- LocalScript para reproducir la música
+local musicScript = Instance.new("LocalScript", LMG2L["ScreenGui_1"]);
+musicScript.Source = [[
+    local sound = script.Parent:WaitForChild("Sound_5")
+    wait(0.5)
+    sound:Play()
+    print("🎵 Reproduciendo: China Meme Song Part 1 - Meheandus Revolution")
+]];
+
+-- ==================== ANIMACIÓN ====================
+local function C_3()
+	local script = LMG2L["LocalScript_3"];
+	local TweenService = game:GetService("TweenService");
+	local gui = script.Parent;
+
+	local DURACION = 2.5;
+	local ESTILO = Enum.EasingStyle.Sine;
+	local DIRECCION = Enum.EasingDirection.InOut;
+
+	local esquina1 = UDim2.new(0.1, 0, 0.1, 0);
+	local esquina2 = UDim2.new(0.85, 0, 0.85, 0);
+
+	gui.Position = esquina1;
+	gui.Rotation = 0;
+	gui.AnchorPoint = Vector2.new(0.5, 0.5);
+
+	local tweenInfo = TweenInfo.new(
+		DURACION,
+		ESTILO,
+		DIRECCION,
+		-1,   -- repetir infinitamente
+		true, -- reverse
+		0
+	);
+
+	local goal = {
+		Position = esquina2,
+		Rotation = 40
+	};
+
+	local tween = TweenService:Create(gui, tweenInfo, goal);
+	tween:Play();
+end
+
+task.spawn(C_3);
+
+print("✅ GUI + Música + Animación cargada correctamente");
+
+return LMG2L["ScreenGui_1"];
