@@ -1,813 +1,46 @@
-local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
+--[[
+	Win98-style Self Admin Tools — viết lại sạch từ file adm_by_erorr422.txt
+	Đặt trong StarterPlayerScripts (LocalScript)
+
+	CẤU TRÚC:
+	1. Các hàm xử lý (fly, noclip, speed, ...) — MỖI LỆNH CHỈ 1 HÀM
+	2. Bảng ChatCommands + 1 player.Chatted DUY NHẤT để gõ lệnh qua chat
+	3. Bảng COMMANDS cho GUI — chỉ gọi lại các hàm ở bước 1, không dán code
+	4. Phần dựng GUI Win98 (không đổi so với bản trước)
+]]
 
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
---// MÀU WIN98 CHUẨN
-local COLORS = {
-	Face = Color3.fromRGB(192, 192, 192),
-	Shadow = Color3.fromRGB(128, 128, 128),
-	DarkShadow = Color3.fromRGB(64, 64, 64),
-	Highlight = Color3.fromRGB(255, 255, 255),
-	TitleActive = Color3.fromRGB(10, 36, 106),
-	TitleActiveEnd = Color3.fromRGB(166, 202, 240),
-	TitleText = Color3.fromRGB(255, 255, 255),
-	FieldBg = Color3.fromRGB(255, 255, 255),
-	Text = Color3.fromRGB(0, 0, 0),
-	DimText = Color3.fromRGB(110, 110, 110),
-	Accent = Color3.fromRGB(0, 0, 128),
-}
-
-local FONT = Enum.Font.Arial
-local FONT_BOLD = Enum.Font.ArialBold
-
---// DANH SÁCH LỆNH — chỉnh sửa tùy ý
-local COMMANDS = {
-	{
-		name = ";fly",
-		chat = ";fly",
-		action = function()
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
-local player = Players.LocalPlayer
-
-local character
-local humanoid
-local rootPart
-
-local flying = false
-local flySpeed = 75
-
-local bodyGyro
-local bodyVelocity
-local flyConnection
-
-local function setupCharacter(char)
-	character = char
-	humanoid = char:WaitForChild("Humanoid")
-	rootPart = char:WaitForChild("HumanoidRootPart")
-end
-
-setupCharacter(player.Character or player.CharacterAdded:Wait())
-
-local function startFly()
-	if flying or not rootPart or not humanoid then
-		return
-	end
-
-	flying = true
-
-	bodyGyro = Instance.new("BodyGyro")
-	bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
-	bodyGyro.P = 100000
-	bodyGyro.D = 1000
-	bodyGyro.CFrame = rootPart.CFrame
-	bodyGyro.Parent = rootPart
-
-	bodyVelocity = Instance.new("BodyVelocity")
-	bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-	bodyVelocity.P = 100000
-	bodyVelocity.Velocity = Vector3.zero
-	bodyVelocity.Parent = rootPart
-
-	humanoid.PlatformStand = true
-	humanoid.AutoRotate = false
-
-	flyConnection = RunService.RenderStepped:Connect(function()
-		if not flying or not rootPart or not rootPart.Parent then
-			return
-		end
-
-		local camera = workspace.CurrentCamera
-		if not camera then
-			return
-		end
-
-		-- Nhân vật luôn nhìn theo camera
-		bodyGyro.CFrame = CFrame.lookAt(
-			rootPart.Position,
-			rootPart.Position + camera.CFrame.LookVector
-		)
-
-		local move = humanoid.MoveDirection
-
-		if move.Magnitude > 0 then
-			-- Hướng camera
-			local forward = camera.CFrame.LookVector
-			local right = camera.CFrame.RightVector
-
-			-- Chỉ lấy hướng trái/phải của joystick
-			local forwardAmount = move:Dot(Vector3.new(
-				forward.X, 0, forward.Z
-			))
-
-			local rightAmount = move:Dot(Vector3.new(
-				right.X, 0, right.Z
-			))
-
-			-- W/S là hướng chính
-			local direction
-
-			if math.abs(forwardAmount) > math.abs(rightAmount) then
-				direction = forward * math.sign(forwardAmount)
-			else
-				direction = right * math.sign(rightAmount)
-			end
-
-			-- Camera ngước/cúi quyết định lên/xuống
-			if direction.Magnitude > 0 then
-				direction = direction.Unit
-				bodyVelocity.Velocity = direction * flySpeed
-			end
-		else
-			-- Không đẩy joystick = đứng yên trên không
-			bodyVelocity.Velocity = Vector3.zero
-		end
-	end)
-end
-
-local function stopFly()
-	if not flying then
-		return
-	end
-
-	flying = false
-
-	if flyConnection then
-		flyConnection:Disconnect()
-		flyConnection = nil
-	end
-
-	if bodyGyro then
-		bodyGyro:Destroy()
-		bodyGyro = nil
-	end
-
-	if bodyVelocity then
-		bodyVelocity:Destroy()
-		bodyVelocity = nil
-	end
-
-	if humanoid then
-		humanoid.PlatformStand = false
-		humanoid.AutoRotate = true
-	end
-end
-
-local function setFlySpeed(value)
-	local speed = tonumber(value)
-
-	if speed then
-		flySpeed = math.clamp(speed, 1, 999)
-	end
-end
-
--- =========================
--- ERROR422 COMMAND SYSTEM
--- =========================
-
-player.Chatted:Connect(function(message)
-	local args = string.split(message, " ")
-	local command = args[1]:lower()
-
-	if command == ";fly" then
-		startFly()
-
-	elseif command == ";unfly" then
-		stopFly()
-
-	elseif command == ";flyspeed" then
-		setFlySpeed(args[2])
-	end
-end)
-
-player.CharacterAdded:Connect(function(char)
-	stopFly()
-	setupCharacter(char)
-end)
-	},
-
-	{
-		name = ";sit",
-		action = function()
-			local character = player.Character
-			local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-
-			if humanoid then
-				humanoid.Sit = true
-			end
-		end
-	},
-
-	{
-		name = ";noclip",
-		chat = ";noclip",
-		action = function()
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
-local player = Players.LocalPlayer
-
-local character
-local noclip = false
-local connection
-
-local function setupCharacter(char)
-	character = char
-end
-
-setupCharacter(player.Character or player.CharacterAdded:Wait())
-
-local function startNoclip()
-	if noclip then return end
-
-	noclip = true
-
-	connection = RunService.Stepped:Connect(function()
-		if not character then return end
-
-		for _, part in ipairs(character:GetDescendants()) do
-			if part:IsA("BasePart") then
-				part.CanCollide = false
-			end
-		end
-	end)
-end
-
-local function stopNoclip()
-	if not noclip then return end
-
-	noclip = false
-
-	if connection then
-		connection:Disconnect()
-		connection = nil
-	end
-
-	if character then
-		for _, part in ipairs(character:GetDescendants()) do
-			if part:IsA("BasePart") then
-				part.CanCollide = true
-			end
-		end
-	end
-end
-
--- COMMANDS
-player.Chatted:Connect(function(message)
-	local command = message:lower()
-
-	if command == ";noclip" then
-		startNoclip()
-
-	elseif command == ";unnoclip" then
-		stopNoclip()
-	end
-end)
-
-player.CharacterAdded:Connect(function(char)
-	stopNoclip()
-	setupCharacter(char)
-end)
-	},
-
-    {
-		name = ";speed (0-999)",
-		chat = ";speed 50",
-		action = function()
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-local DEFAULT_SPEED = 16
-local speed = DEFAULT_SPEED
-
-local function setSpeed(value)
-	local character = player.Character
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if not humanoid then return end
-
-	local newSpeed = tonumber(value)
-	if not newSpeed then return end
-
-	speed = math.clamp(newSpeed, 1, 999)
-	humanoid.WalkSpeed = speed
-end
-
-local function resetSpeed()
-	local character = player.Character
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if not humanoid then return end
-
-	speed = DEFAULT_SPEED
-	humanoid.WalkSpeed = DEFAULT_SPEED
-end
-
--- COMMANDS
-player.Chatted:Connect(function(message)
-	local args = string.split(message, " ")
-	local command = args[1]:lower()
-
-	if command == ";speed" then
-		setSpeed(args[2])
-
-	elseif command == ";unspeed" then
-		resetSpeed()
-	end
-end)
-
-player.CharacterAdded:Connect(function(character)
-	local humanoid = character:WaitForChild("Humanoid")
-	humanoid.WalkSpeed = speed
-end)
-	},
-	
-	{
-		name = ";Jump",
-		action = function()
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-player.Chatted:Connect(function(message)
-	local command = message:lower()
-
-	if command == ";jump" then
-		local character = player.Character
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-
-		if humanoid then
-			humanoid.Jump = true
-		end
-	end
-end)
-	},
-	
-	{
-		name = ";jump",
-		chat = ";jump",
-		action = function()
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-player.Chatted:Connect(function(message)
-	local command = message:lower()
-
-	if command == ";jump" then
-		local character = player.Character
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-
-		if humanoid then
-			humanoid.Jump = true
-		end
-	end
-end)
-	},
-	
-	{
-		name = ";gravity (0-999)",
-		chat = ";gravity",
-		action = function()
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-player.Chatted:Connect(function(message)
-	if message:lower() == ";respawn" then
-		local character = player.Character
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-
-		if humanoid then
-			humanoid.Health = 0
-		end
-	end
-end)
-
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-local DEFAULT_GRAVITY = 196.2
-local gravity = DEFAULT_GRAVITY
-
-local function setGravity(value)
-	local newGravity = tonumber(value)
-
-	if newGravity then
-		gravity = math.clamp(newGravity, 0, 999)
-		workspace.Gravity = gravity
-	end
-end
-
-local function resetGravity()
-	gravity = DEFAULT_GRAVITY
-	workspace.Gravity = DEFAULT_GRAVITY
-end
-
-player.Chatted:Connect(function(message)
-	local args = string.split(message, " ")
-	local command = args[1]:lower()
-
-	if command == ";gravity" then
-		setGravity(args[2])
-
-	elseif command == ";ungravity" then
-		resetGravity()
-	end
-end)
-	},
-	
-	{
-		name = ";freeze",
-		chat = ";freeze",
-		action = function()
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-local frozen = false
-local savedTransforms = {}
-local savedWalkSpeed = 16
-local savedJumpPower = 50
-local savedAutoRotate = true
-
-local function getCharacter()
-	local character = player.Character
-	if not character then return end
-
-	local humanoid = character:FindFirstChildOfClass("Humanoid")
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
-
-	return character, humanoid, rootPart
-end
-
-local function freeze()
-	if frozen then return end
-
-	local character, humanoid, rootPart = getCharacter()
-	if not humanoid or not rootPart then return end
-
-	frozen = true
-	savedTransforms = {}
-
-	savedWalkSpeed = humanoid.WalkSpeed
-	savedJumpPower = humanoid.JumpPower
-	savedAutoRotate = humanoid.AutoRotate
-
-	-- Lưu đúng pose hiện tại
-	for _, obj in ipairs(character:GetDescendants()) do
-		if obj:IsA("Motor6D") then
-			savedTransforms[obj] = obj.Transform
-		end
-	end
-
-	-- Dừng animation
-	for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
-		track:Stop(0)
-	end
-
-	humanoid.WalkSpeed = 0
-	humanoid.JumpPower = 0
-	humanoid.AutoRotate = false
-
-	rootPart.Anchored = true
-
-	-- Giữ nguyên pose
-	for motor, transform in pairs(savedTransforms) do
-		if motor.Parent then
-			motor.Transform = transform
-		end
-	end
-end
-
-local function unfreeze()
-	if not frozen then return end
-
-	local character, humanoid, rootPart = getCharacter()
-
-	frozen = false
-
-	if rootPart then
-		rootPart.Anchored = false
-	end
-
-	if character then
-		for motor, transform in pairs(savedTransforms) do
-			if motor.Parent then
-				motor.Transform = CFrame.identity
-			end
-		end
-	end
-
-	if humanoid then
-		humanoid.WalkSpeed = savedWalkSpeed
-		humanoid.JumpPower = savedJumpPower
-		humanoid.AutoRotate = savedAutoRotate
-	end
-
-	savedTransforms = {}
-end
-
--- COMMANDS
-player.Chatted:Connect(function(message)
-	local command = message:lower()
-
-	if command == ";freeze" then
-		freeze()
-
-	elseif command == ";unfreeze" then
-		unfreeze()
-	end
-end)
-
-player.CharacterAdded:Connect(function()
-	frozen = false
-	savedTransforms = {}
-end)
-
-	},
-	
-	{
-		name = ";freecam"
-		chat = ";freecam",,
-		action = function()
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local RS = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
 
 local player = Players.LocalPlayer
-local cam = workspace.CurrentCamera
-local onMobile = not UIS.KeyboardEnabled
-
-local keysDown = {}
-local rotating = false
-local touchPos = nil
-local freecamEnabled = false
-
-local speed = 0.5
-local sens = 0.3
-
-if onMobile then
-    sens *= 2
-end
-
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
---// FREEZE
-local function freezeCharacter(state)
-    local character = player.Character
-    if not character then return end
-
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    local root = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoid then
-        if state then
-            humanoid.WalkSpeed = 0
-            humanoid.JumpPower = 0
-            humanoid.AutoRotate = false
-        else
-            humanoid.WalkSpeed = 16
-            humanoid.JumpPower = 50
-            humanoid.AutoRotate = true
-        end
-    end
-
-    if root then
-        root.Anchored = state
-    end
-end
-
---// BẬT / TẮT FREECAM
-local function setFreecam(state)
-    freecamEnabled = state
-
-    if state then
-        cam.CameraType = Enum.CameraType.Scriptable
-        freezeCharacter(true)
-    else
-        rotating = false
-        touchPos = nil
-
-        keysDown["Enum.KeyCode.W"] = false
-        keysDown["Enum.KeyCode.A"] = false
-        keysDown["Enum.KeyCode.S"] = false
-        keysDown["Enum.KeyCode.D"] = false
-
-        UIS.MouseBehavior = Enum.MouseBehavior.Default
-
-        cam.CameraType = Enum.CameraType.Custom
-
-        local character = player.Character
-        if character then
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid then
-                cam.CameraSubject = humanoid
-            end
-        end
-
-        freezeCharacter(false)
-    end
-end
-
---// CAMERA
-local function renderStepped()
-    if not freecamEnabled then
-        return
-    end
-
-    if rotating then
-        local delta = UIS:GetMouseDelta()
-        local cf = cam.CFrame
-
-        cf *= CFrame.Angles(-math.rad(delta.Y), 0, 0)
-
-        cf =
-            CFrame.Angles(0, -math.rad(delta.X), 0)
-            * (cf - cf.Position)
-            + cf.Position
-
-        cf = CFrame.lookAt(
-            cf.Position,
-            cf.Position + cf.LookVector
-        )
-
-        if delta ~= Vector2.new(0, 0) then
-            cam.CFrame = cam.CFrame:Lerp(cf, sens)
-        end
-
-        UIS.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-    else
-        UIS.MouseBehavior = Enum.MouseBehavior.Default
-    end
-
-    if keysDown["Enum.KeyCode.W"] then
-        cam.CFrame *= CFrame.new(0, 0, -speed)
-    end
-
-    if keysDown["Enum.KeyCode.A"] then
-        cam.CFrame *= CFrame.new(-speed, 0, 0)
-    end
-
-    if keysDown["Enum.KeyCode.S"] then
-        cam.CFrame *= CFrame.new(0, 0, speed)
-    end
-
-    if keysDown["Enum.KeyCode.D"] then
-        cam.CFrame *= CFrame.new(speed, 0, 0)
-    end
-end
-
-RS.RenderStepped:Connect(renderStepped)
-
---// KEYBOARD / TOUCH
-local validKeys = {
-    "Enum.KeyCode.W",
-    "Enum.KeyCode.A",
-    "Enum.KeyCode.S",
-    "Enum.KeyCode.D"
-}
-
-UIS.InputBegan:Connect(function(input)
-    if not freecamEnabled then
-        return
-    end
-
-    for _, key in pairs(validKeys) do
-        if key == tostring(input.KeyCode) then
-            keysDown[key] = true
-        end
-    end
-
-    if input.UserInputType == Enum.UserInputType.MouseButton2
-        or (
-            input.UserInputType == Enum.UserInputType.Touch
-            and UIS:GetMouseLocation().X > cam.ViewportSize.X / 2
-        ) then
-
-        rotating = true
-    end
-
-    if input.UserInputType == Enum.UserInputType.Touch then
-        if input.Position.X < cam.ViewportSize.X / 2 then
-            touchPos = input.Position
-        end
-    end
-end)
-
-UIS.InputEnded:Connect(function(input)
-    for key in pairs(keysDown) do
-        if key == tostring(input.KeyCode) then
-            keysDown[key] = false
-        end
-    end
-
-    if input.UserInputType == Enum.UserInputType.MouseButton2
-        or (
-            input.UserInputType == Enum.UserInputType.Touch
-            and UIS:GetMouseLocation().X > cam.ViewportSize.X / 2
-        ) then
-
-        rotating = false
-    end
-
-    if input.UserInputType == Enum.UserInputType.Touch and touchPos then
-        if input.Position.X < cam.ViewportSize.X / 2 then
-            touchPos = nil
-
-            keysDown["Enum.KeyCode.W"] = false
-            keysDown["Enum.KeyCode.A"] = false
-            keysDown["Enum.KeyCode.S"] = false
-            keysDown["Enum.KeyCode.D"] = false
-        end
-    end
-end)
-
---// MOBILE JOYSTICK
-UIS.TouchMoved:Connect(function(input)
-    if not freecamEnabled or not touchPos then
-        return
-    end
-
-    if input.Position.X < cam.ViewportSize.X / 2 then
-
-        if input.Position.Y < touchPos.Y then
-            keysDown["Enum.KeyCode.W"] = true
-            keysDown["Enum.KeyCode.S"] = false
-        else
-            keysDown["Enum.KeyCode.W"] = false
-            keysDown["Enum.KeyCode.S"] = true
-        end
-
-        if input.Position.X < touchPos.X - 15 then
-            keysDown["Enum.KeyCode.A"] = true
-            keysDown["Enum.KeyCode.D"] = false
-
-        elseif input.Position.X > touchPos.X + 15 then
-            keysDown["Enum.KeyCode.A"] = false
-            keysDown["Enum.KeyCode.D"] = true
-
-        else
-            keysDown["Enum.KeyCode.A"] = false
-            keysDown["Enum.KeyCode.D"] = false
-        end
-    end
-end)
-
---// CHAT COMMAND
-player.Chatted:Connect(function(message)
-    message = message:lower():gsub("%s+", "")
-
-    if message == ";freecam" then
-        setFreecam(true)
-
-    elseif message == ";unfreecam" then
-        setFreecam(false)
-    end
-end)
-
---// GIỮ FREEZE KHI RESPAWN
-player.CharacterAdded:Connect(function()
-    if freecamEnabled then
-        task.wait(0.2)
-        freezeCharacter(true)
-    end
-end)
-	},
-	
-	{
-		name = ";viewcam (player name)",
-		chat = ";viewcam",
-		action = function()
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-
-local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
 local camera = workspace.CurrentCamera
 
-local viewing = false
-local targetPlayer = nil
-local connection = nil
+--============================================================
+-- TIỆN ÍCH DÙNG CHUNG
+--============================================================
 
-local oldCameraType
-local oldCameraSubject
+local function getCharacter()
+	local character = player.Character
+	if not character then return nil end
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local root = character:FindFirstChild("HumanoidRootPart")
+	if not humanoid or not root then return nil end
+	return character, humanoid, root
+end
 
-local function findPlayer(name)
+local function findPlayerByName(name)
+	if not name or name == "" then return nil end
 	name = name:lower()
 
-	-- Tên đầy đủ trước
 	for _, plr in ipairs(Players:GetPlayers()) do
 		if plr.Name:lower() == name then
 			return plr
 		end
 	end
 
-	-- Cho phép nhập một phần tên
 	for _, plr in ipairs(Players:GetPlayers()) do
 		if plr.Name:lower():sub(1, #name) == name then
 			return plr
@@ -817,133 +50,437 @@ local function findPlayer(name)
 	return nil
 end
 
-local function unviewcam()
-	if not viewing then return end
+--============================================================
+-- ;fly / ;unfly / ;flyspeed
+--============================================================
 
-	viewing = false
-	targetPlayer = nil
+local flying = false
+local flySpeed = 75
+local flyGyro, flyVelocity, flyConn
 
-	if connection then
-		connection:Disconnect()
-		connection = nil
-	end
+local function startFly()
+	if flying then return end
+	local _, humanoid, root = getCharacter()
+	if not humanoid or not root then return end
 
-	camera.CameraType = oldCameraType or Enum.CameraType.Custom
-	camera.CameraSubject = oldCameraSubject
+	flying = true
 
-	oldCameraType = nil
-	oldCameraSubject = nil
-end
+	flyGyro = Instance.new("BodyGyro")
+	flyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+	flyGyro.P = 100000
+	flyGyro.D = 1000
+	flyGyro.CFrame = root.CFrame
+	flyGyro.Parent = root
 
-local function viewcam(target)
-	if not target or target == player then
-		return
-	end
+	flyVelocity = Instance.new("BodyVelocity")
+	flyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+	flyVelocity.P = 100000
+	flyVelocity.Velocity = Vector3.zero
+	flyVelocity.Parent = root
 
-	local character = target.Character
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	local root = character and character:FindFirstChild("HumanoidRootPart")
+	humanoid.PlatformStand = true
+	humanoid.AutoRotate = false
 
-	if not humanoid or not root then
-		return
-	end
+	flyConn = RS.RenderStepped:Connect(function()
+		if not flying then return end
+		local _, h, r = getCharacter()
+		if not h or not r or not flyGyro or not flyVelocity then return end
 
-	-- Nếu đang view người khác thì đổi mục tiêu
-	if viewing then
-		unviewcam()
-	end
+		flyGyro.CFrame = CFrame.lookAt(r.Position, r.Position + camera.CFrame.LookVector)
 
-	viewing = true
-	targetPlayer = target
+		local move = h.MoveDirection
+		if move.Magnitude > 0 then
+			local forward = camera.CFrame.LookVector
+			local right = camera.CFrame.RightVector
 
-	oldCameraType = camera.CameraType
-	oldCameraSubject = camera.CameraSubject
+			local forwardAmount = move:Dot(Vector3.new(forward.X, 0, forward.Z))
+			local rightAmount = move:Dot(Vector3.new(right.X, 0, right.Z))
 
-	camera.CameraType = Enum.CameraType.Custom
-	camera.CameraSubject = humanoid
+			local direction
+			if math.abs(forwardAmount) > math.abs(rightAmount) then
+				direction = forward * math.sign(forwardAmount)
+			else
+				direction = right * math.sign(rightAmount)
+			end
 
-	connection = RunService.RenderStepped:Connect(function()
-		if not viewing then
-			return
-		end
-
-		local currentCharacter = targetPlayer.Character
-		local currentHumanoid =
-			currentCharacter and
-			currentCharacter:FindFirstChildOfClass("Humanoid")
-
-		if not currentHumanoid or currentHumanoid.Health <= 0 then
-			unviewcam()
-			return
-		end
-
-		-- Giữ camera bám mục tiêu
-		if camera.CameraSubject ~= currentHumanoid then
-			camera.CameraSubject = currentHumanoid
+			if direction.Magnitude > 0 then
+				flyVelocity.Velocity = direction.Unit * flySpeed
+			end
+		else
+			flyVelocity.Velocity = Vector3.zero
 		end
 	end)
 end
 
-player.Chatted:Connect(function(message)
-	local args = string.split(message, " ")
-	local command = args[1]:lower()
+local function stopFly()
+	if not flying then return end
+	flying = false
 
-	if command == ";viewcam" then
-		local name = table.concat(args, " ", 2)
+	if flyConn then flyConn:Disconnect() flyConn = nil end
+	if flyGyro then flyGyro:Destroy() flyGyro = nil end
+	if flyVelocity then flyVelocity:Destroy() flyVelocity = nil end
 
-		if name ~= "" then
-			local target = findPlayer(name)
+	local _, humanoid = getCharacter()
+	if humanoid then
+		humanoid.PlatformStand = false
+		humanoid.AutoRotate = true
+	end
+end
 
-			if target then
-				viewcam(target)
+local function setFlySpeed(value)
+	local n = tonumber(value)
+	if n then flySpeed = math.clamp(n, 1, 999) end
+end
+
+--============================================================
+-- ;sit
+--============================================================
+
+local function sitDown()
+	local _, humanoid = getCharacter()
+	if humanoid then humanoid.Sit = true end
+end
+
+--============================================================
+-- ;noclip / ;unnoclip
+--============================================================
+
+local noclipping = false
+local noclipConn
+
+local function startNoclip()
+	if noclipping then return end
+	noclipping = true
+
+	noclipConn = RS.Stepped:Connect(function()
+		local character = player.Character
+		if not character then return end
+		for _, part in ipairs(character:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part.CanCollide = false
 			end
 		end
+	end)
+end
 
-	elseif command == ";unviewcam" then
-		unviewcam()
+local function stopNoclip()
+	if not noclipping then return end
+	noclipping = false
+
+	if noclipConn then
+		noclipConn:Disconnect()
+		noclipConn = nil
 	end
-end)
-	},
-	
-	{
-		name = ";rejoin",
-		chat = ";Rejoin",
-		action = function()
-local Players = game:GetService("Players")
-local TeleportService = game:GetService("TeleportService")
 
-local player = Players.LocalPlayer
-
-player.Chatted:Connect(function(message)
-	message = message:lower():gsub("%s+", "")
-
-	if message == ";rejoin" then
-		local ok, err = pcall(function()
-			TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, player)
-		end)
-		if not ok then
-			warn("Rejoin thất bại:", err)
+	local character = player.Character
+	if character then
+		for _, part in ipairs(character:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part.CanCollide = true
+			end
 		end
 	end
-end)
-	},
-	
-	{
-		name = ";invisible",
-		action = function()
-local Players = game:GetService("Players")
+end
 
-local player = Players.LocalPlayer
+--============================================================
+-- ;speed / ;unspeed
+--============================================================
+
+local DEFAULT_WALKSPEED = 16
+
+local function setSpeed(value)
+	local _, humanoid = getCharacter()
+	local n = tonumber(value)
+	if humanoid and n then
+		humanoid.WalkSpeed = math.clamp(n, 1, 999)
+	end
+end
+
+local function resetSpeed()
+	local _, humanoid = getCharacter()
+	if humanoid then humanoid.WalkSpeed = DEFAULT_WALKSPEED end
+end
+
+--============================================================
+-- ;jump (nhảy ngay lập tức) / ;jumppower / ;unjumppower
+--============================================================
+
+local DEFAULT_JUMPPOWER = 50
+
+local function jumpNow()
+	local _, humanoid = getCharacter()
+	if humanoid then humanoid.Jump = true end
+end
+
+local function setJumpPower(value)
+	local _, humanoid = getCharacter()
+	local n = tonumber(value)
+	if humanoid and n then
+		humanoid.UseJumpPower = true
+		humanoid.JumpPower = math.clamp(n, 1, 999)
+	end
+end
+
+local function resetJumpPower()
+	local _, humanoid = getCharacter()
+	if humanoid then
+		humanoid.UseJumpPower = true
+		humanoid.JumpPower = DEFAULT_JUMPPOWER
+	end
+end
+
+--============================================================
+-- ;gravity / ;ungravity
+--============================================================
+
+local DEFAULT_GRAVITY = 196.2
+
+local function setGravity(value)
+	local n = tonumber(value)
+	if n then workspace.Gravity = math.clamp(n, 0, 999) end
+end
+
+local function resetGravity()
+	workspace.Gravity = DEFAULT_GRAVITY
+end
+
+--============================================================
+-- ;freeze / ;unfreeze
+--============================================================
+
+local frozen = false
+local savedTransforms = {}
+local savedWalkSpeed, savedJumpPower, savedAutoRotate = DEFAULT_WALKSPEED, DEFAULT_JUMPPOWER, true
+
+local function freeze()
+	if frozen then return end
+	local character, humanoid, root = getCharacter()
+	if not humanoid or not root then return end
+
+	frozen = true
+	savedTransforms = {}
+	savedWalkSpeed = humanoid.WalkSpeed
+	savedJumpPower = humanoid.JumpPower
+	savedAutoRotate = humanoid.AutoRotate
+
+	for _, obj in ipairs(character:GetDescendants()) do
+		if obj:IsA("Motor6D") then
+			savedTransforms[obj] = obj.Transform
+		end
+	end
+
+	for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+		track:Stop(0)
+	end
+
+	humanoid.WalkSpeed = 0
+	humanoid.JumpPower = 0
+	humanoid.AutoRotate = false
+	root.Anchored = true
+
+	for motor, transform in pairs(savedTransforms) do
+		if motor.Parent then
+			motor.Transform = transform
+		end
+	end
+end
+
+local function unfreeze()
+	if not frozen then return end
+	frozen = false
+
+	local _, humanoid, root = getCharacter()
+	if root then root.Anchored = false end
+	if humanoid then
+		humanoid.WalkSpeed = savedWalkSpeed
+		humanoid.JumpPower = savedJumpPower
+		humanoid.AutoRotate = savedAutoRotate
+	end
+
+	savedTransforms = {}
+end
+
+--============================================================
+-- ;freecam / ;unfreecam (tự đóng băng nhân vật trong lúc bay camera)
+--============================================================
+
+local freecamEnabled = false
+local freecamKeys = {}
+local freecamConn, freecamInputBegan, freecamInputEnded, freecamInputChanged
+local freecamSpeed = 50
+local freecamSens = 0.25
+local freecamYaw, freecamPitch, freecamPos
+local freecamOldType, freecamOldSubject
+
+local function startFreecam()
+	if freecamEnabled then return end
+	freecamEnabled = true
+	freecamKeys = {}
+
+	freecamOldType = camera.CameraType
+	freecamOldSubject = camera.CameraSubject
+	freecamPos = camera.CFrame.Position
+
+	local rx, ry = camera.CFrame:ToOrientation()
+	freecamPitch = math.deg(rx)
+	freecamYaw = math.deg(ry)
+
+	camera.CameraType = Enum.CameraType.Scriptable
+	UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+	UIS.MouseIconEnabled = false
+
+	freeze()
+
+	freecamInputBegan = UIS.InputBegan:Connect(function(input, processed)
+		if processed then return end
+		local k = input.KeyCode
+		if k == Enum.KeyCode.W then freecamKeys.W = true end
+		if k == Enum.KeyCode.S then freecamKeys.S = true end
+		if k == Enum.KeyCode.A then freecamKeys.A = true end
+		if k == Enum.KeyCode.D then freecamKeys.D = true end
+		if k == Enum.KeyCode.Space then freecamKeys.Space = true end
+		if k == Enum.KeyCode.LeftControl then freecamKeys.Ctrl = true end
+	end)
+
+	freecamInputEnded = UIS.InputEnded:Connect(function(input)
+		local k = input.KeyCode
+		if k == Enum.KeyCode.W then freecamKeys.W = false end
+		if k == Enum.KeyCode.S then freecamKeys.S = false end
+		if k == Enum.KeyCode.A then freecamKeys.A = false end
+		if k == Enum.KeyCode.D then freecamKeys.D = false end
+		if k == Enum.KeyCode.Space then freecamKeys.Space = false end
+		if k == Enum.KeyCode.LeftControl then freecamKeys.Ctrl = false end
+	end)
+
+	freecamInputChanged = UIS.InputChanged:Connect(function(input)
+		if not freecamEnabled then return end
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			freecamYaw -= input.Delta.X * freecamSens
+			freecamPitch = math.clamp(freecamPitch - input.Delta.Y * freecamSens, -89, 89)
+		end
+	end)
+
+	freecamConn = RS.RenderStepped:Connect(function(dt)
+		if not freecamEnabled then return end
+
+		local rotation = CFrame.Angles(0, math.rad(freecamYaw), 0) * CFrame.Angles(math.rad(freecamPitch), 0, 0)
+		local move = Vector3.zero
+
+		if freecamKeys.W then move += rotation.LookVector end
+		if freecamKeys.S then move -= rotation.LookVector end
+		if freecamKeys.A then move -= rotation.RightVector end
+		if freecamKeys.D then move += rotation.RightVector end
+		if freecamKeys.Space then move += Vector3.yAxis end
+		if freecamKeys.Ctrl then move -= Vector3.yAxis end
+
+		if move.Magnitude > 0 then
+			freecamPos += move.Unit * freecamSpeed * dt
+		end
+
+		camera.CFrame = CFrame.new(freecamPos) * rotation
+	end)
+end
+
+local function stopFreecam()
+	if not freecamEnabled then return end
+	freecamEnabled = false
+
+	if freecamConn then freecamConn:Disconnect() freecamConn = nil end
+	if freecamInputBegan then freecamInputBegan:Disconnect() freecamInputBegan = nil end
+	if freecamInputEnded then freecamInputEnded:Disconnect() freecamInputEnded = nil end
+	if freecamInputChanged then freecamInputChanged:Disconnect() freecamInputChanged = nil end
+
+	UIS.MouseBehavior = Enum.MouseBehavior.Default
+	UIS.MouseIconEnabled = true
+
+	camera.CameraType = freecamOldType or Enum.CameraType.Custom
+	camera.CameraSubject = freecamOldSubject
+
+	unfreeze()
+end
+
+--============================================================
+-- ;viewcam <tên> / ;unviewcam  (xem camera qua người chơi khác)
+--============================================================
+
+local viewingCam = false
+local viewTarget = nil
+local viewConn
+local viewOldType, viewOldSubject
+
+local function unviewcam()
+	if not viewingCam then return end
+	viewingCam = false
+	viewTarget = nil
+
+	if viewConn then
+		viewConn:Disconnect()
+		viewConn = nil
+	end
+
+	camera.CameraType = viewOldType or Enum.CameraType.Custom
+	camera.CameraSubject = viewOldSubject
+end
+
+local function viewcam(target)
+	if not target or target == player then return end
+
+	local character = target.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then return end
+
+	if viewingCam then unviewcam() end
+
+	viewingCam = true
+	viewTarget = target
+	viewOldType = camera.CameraType
+	viewOldSubject = camera.CameraSubject
+
+	camera.CameraType = Enum.CameraType.Custom
+	camera.CameraSubject = humanoid
+
+	viewConn = RS.RenderStepped:Connect(function()
+		if not viewingCam then return end
+		local char = viewTarget and viewTarget.Character
+		local h = char and char:FindFirstChildOfClass("Humanoid")
+
+		if not h or h.Health <= 0 then
+			unviewcam()
+			return
+		end
+
+		if camera.CameraSubject ~= h then
+			camera.CameraSubject = h
+		end
+	end)
+end
+
+--============================================================
+-- ;rejoin
+--============================================================
+
+local function rejoin()
+	local ok, err = pcall(function()
+		TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, player)
+	end)
+	if not ok then
+		warn("Rejoin thất bại:", err)
+	end
+end
+
+--============================================================
+-- ;invisible / ;visible
+-- Lưu ý: ghost chỉ tạo trên CLIENT của bạn (LocalScript), người
+-- chơi khác KHÔNG thấy hiệu ứng này — chỉ ẩn nhân vật với chính bạn.
+--============================================================
 
 local invisible = false
-local ghost
-
+local ghostClone
 local savedCFrame
 local savedTransparency = {}
 
 local function createGhost(character)
 	character.Archivable = true
-
 	local clone = character:Clone()
 	clone.Name = "ERROR422_Ghost"
 
@@ -963,26 +500,18 @@ local function createGhost(character)
 
 	clone.Parent = workspace
 	clone:PivotTo(savedCFrame)
-
 	return clone
 end
 
 local function setInvisible()
 	if invisible then return end
-
-	local character = player.Character
-	if not character then return end
-
-	local root = character:FindFirstChild("HumanoidRootPart")
+	local character, _, root = getCharacter()
 	if not root then return end
 
 	invisible = true
 	savedCFrame = root.CFrame
+	ghostClone = createGhost(character)
 
-	-- Tạo ghost tại vị trí cũ
-	ghost = createGhost(character)
-
-	-- Ẩn nhân vật thật trên client
 	for _, obj in ipairs(character:GetDescendants()) do
 		if obj:IsA("BasePart") then
 			savedTransparency[obj] = obj.LocalTransparencyModifier
@@ -996,12 +525,11 @@ end
 
 local function setVisible()
 	if not invisible then return end
-
 	invisible = false
 
-	if ghost then
-		ghost:Destroy()
-		ghost = nil
+	if ghostClone then
+		ghostClone:Destroy()
+		ghostClone = nil
 	end
 
 	for obj, value in pairs(savedTransparency) do
@@ -1017,128 +545,165 @@ local function setVisible()
 	table.clear(savedTransparency)
 end
 
-player.Chatted:Connect(function(message)
-	message = message:lower():gsub("%s+", "")
+--============================================================
+-- ;tp <tên người chơi>
+--============================================================
 
-	if message == ";invisible" then
-		setInvisible()
-
-	elseif message == ";visible" then
-		setVisible()
-	end
-end)
-
-	},
-	
-	{
-		name = ";tp (player name)",
-		action = function()
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
-local function findPlayer(name)
-	name = name:lower()
-
-	for _, plr in ipairs(Players:GetPlayers()) do
-		if plr.Name:lower() == name or plr.DisplayName:lower() == name then
-			return plr
-		end
-	end
-
-	-- Cho phép nhập một phần tên
-	for _, plr in ipairs(Players:GetPlayers()) do
-		if plr.Name:lower():sub(1, #name) == name then
-			return plr
-		end
-	end
-
-	return nil
-end
-
-player.Chatted:Connect(function(message)
-	local args = message:split(" ")
-
-	if args[1]:lower() ~= ";tp" then
-		return
-	end
-
-	local targetName = args[2]
-	if not targetName then
-		return
-	end
-
-	local target = findPlayer(targetName)
+local function tpToPlayer(name)
+	local target = findPlayerByName(name)
 	if not target then
-		warn("Không tìm thấy player:", targetName)
+		warn("Không tìm thấy player:", name)
 		return
 	end
 
-	local character = player.Character
-	local targetCharacter = target.Character
-
-	local root = character and character:FindFirstChild("HumanoidRootPart")
-	local targetRoot = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+	local _, _, root = getCharacter()
+	local targetChar = target.Character
+	local targetRoot = targetChar and targetChar:FindFirstChild("HumanoidRootPart")
 
 	if root and targetRoot then
 		root.CFrame = targetRoot.CFrame
 	end
+end
+
+--============================================================
+-- ;respawn
+--============================================================
+
+local function respawnSelf()
+	local _, humanoid = getCharacter()
+	if humanoid then humanoid.Health = 0 end
+end
+
+--============================================================
+-- RESET TRẠNG THÁI KHI NHÂN VẬT RESPAWN
+--============================================================
+
+player.CharacterAdded:Connect(function()
+	flying = false
+	noclipping = false
+	frozen = false
+	invisible = false
+
+	if flyConn then flyConn:Disconnect() flyConn = nil end
+	if flyGyro then flyGyro:Destroy() flyGyro = nil end
+	if flyVelocity then flyVelocity:Destroy() flyVelocity = nil end
+	if noclipConn then noclipConn:Disconnect() noclipConn = nil end
 end)
-	},
-	
-	{
-		name = ";respawn",
-		chat = ";respawn",
-		action = function()
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
 
-player.Chatted:Connect(function(message)
-	message = message:lower():gsub("%s+", "")
+--============================================================
+-- GÕ LỆNH QUA CHAT — 1 HANDLER DUY NHẤT CHO TẤT CẢ LỆNH
+--============================================================
 
-	if message == ";respawn" then
-		local character = player.Character
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+local ChatCommands = {
+	[";fly"] = function() startFly() end,
+	[";unfly"] = function() stopFly() end,
+	[";flyspeed"] = function(_, args) setFlySpeed(args[2]) end,
 
-		if humanoid then
-			humanoid.Health = 0
-		end
-	end
-end)
-	},
-	
-	{
-		name = ";jumppower",
-		chat = ";jumppower 20",
-		action = function()
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+	[";sit"] = function() sitDown() end,
 
-player.Chatted:Connect(function(message)
-	local args = message:split(" ")
+	[";noclip"] = function() startNoclip() end,
+	[";unnoclip"] = function() stopNoclip() end,
 
-	if args[1]:lower() ~= ";jumppower" then
-		return
-	end
+	[";speed"] = function(_, args) setSpeed(args[2]) end,
+	[";unspeed"] = function() resetSpeed() end,
 
-	local humanoid = player.Character
-		and player.Character:FindFirstChildOfClass("Humanoid")
+	[";jump"] = function() jumpNow() end,
+	[";jumppower"] = function(_, args) setJumpPower(args[2]) end,
+	[";unjumppower"] = function() resetJumpPower() end,
 
-	if not humanoid then
-		return
-	end
+	[";gravity"] = function(_, args) setGravity(args[2]) end,
+	[";ungravity"] = function() resetGravity() end,
 
-	local power = tonumber(args[2])
-	if not power then
-		return
-	end
+	[";freeze"] = function() freeze() end,
+	[";unfreeze"] = function() unfreeze() end,
 
-	humanoid.UseJumpPower = true
-	humanoid.JumpPower = math.clamp(power, 1, 999)
-end)
-	},
+	[";freecam"] = function() startFreecam() end,
+	[";unfreecam"] = function() stopFreecam() end,
+
+	[";viewcam"] = function(rest)
+		local target = findPlayerByName(rest)
+		if target then viewcam(target) end
+	end,
+	[";unviewcam"] = function() unviewcam() end,
+
+	[";rejoin"] = function() rejoin() end,
+
+	[";invisible"] = function() setInvisible() end,
+	[";visible"] = function() setVisible() end,
+
+	[";tp"] = function(_, args) tpToPlayer(args[2]) end,
+
+	[";respawn"] = function() respawnSelf() end,
 }
 
---// TIỆN ÍCH: tạo bevel kiểu win98 (viền nổi/lõm)
+player.Chatted:Connect(function(message)
+	local args = string.split(message, " ")
+	local cmd = (args[1] or ""):lower()
+	local rest = table.concat(args, " ", 2)
+
+	local handler = ChatCommands[cmd]
+	if handler then
+		handler(rest, args)
+	end
+end)
+
+--============================================================
+-- MÀU WIN98 CHUẨN
+--============================================================
+
+local COLORS = {
+	Face = Color3.fromRGB(192, 192, 192),
+	Shadow = Color3.fromRGB(128, 128, 128),
+	DarkShadow = Color3.fromRGB(64, 64, 64),
+	Highlight = Color3.fromRGB(255, 255, 255),
+	TitleActive = Color3.fromRGB(10, 36, 106),
+	TitleActiveEnd = Color3.fromRGB(166, 202, 240),
+	TitleText = Color3.fromRGB(255, 255, 255),
+	FieldBg = Color3.fromRGB(255, 255, 255),
+	Text = Color3.fromRGB(0, 0, 0),
+	DimText = Color3.fromRGB(110, 110, 110),
+	Accent = Color3.fromRGB(0, 0, 128),
+}
+
+local FONT = Enum.Font.Arial
+local FONT_BOLD = Enum.Font.ArialBold
+
+--============================================================
+-- DANH SÁCH LỆNH HIỂN THỊ TRONG GUI
+--
+-- Khuôn mẫu để thêm dòng mới, copy 1 block rồi sửa lại:
+--
+-- {
+--     name = ";tenlenh <tham_so_neu_co>",
+--     action = function()
+--         -- gọi hàm xử lý đã viết ở phần trên, KHÔNG dán nguyên script vào đây
+--     end,
+-- },
+--============================================================
+
+local COMMANDS = {
+	{ name = ";fly (bấm lại để tắt)", action = function() if flying then stopFly() else startFly() end end },
+	{ name = ";noclip (bấm lại để tắt)", action = function() if noclipping then stopNoclip() else startNoclip() end end },
+	{ name = ";freeze (bấm lại để tắt)", action = function() if frozen then unfreeze() else freeze() end end },
+	{ name = ";freecam (bấm lại để tắt)", action = function() if freecamEnabled then stopFreecam() else startFreecam() end end },
+	{ name = ";invisible (bấm lại để tắt)", action = function() if invisible then setVisible() else setInvisible() end end },
+	{ name = ";speed 50", action = function() setSpeed(50) end },
+	{ name = ";unspeed (về mặc định)", action = function() resetSpeed() end },
+	{ name = ";jumppower 100", action = function() setJumpPower(100) end },
+	{ name = ";jump", action = function() jumpNow() end },
+	{ name = ";sit", action = function() sitDown() end },
+	{ name = ";gravity 100", action = function() setGravity(100) end },
+	{ name = ";ungravity (về mặc định)", action = function() resetGravity() end },
+	{ name = ";respawn", action = function() respawnSelf() end },
+	{ name = ";rejoin", action = function() rejoin() end },
+
+	-- 👇 THÊM LỆNH MỚI CỦA BẠN Ở ĐÂY, PHÍA TRÊN DẤU "}" CUỐI CÙNG
+}
+
+--============================================================
+-- TIỆN ÍCH: bevel kiểu win98 (viền nổi/lõm)
+--============================================================
+
 local function applyBevel(frame, raised)
 	local topLeft = raised and COLORS.Highlight or COLORS.Shadow
 	local bottomRight = raised and COLORS.Shadow or COLORS.Highlight
@@ -1167,7 +732,10 @@ local function applyBevel(frame, raised)
 	line(UDim2.new(1, -2, 0, 1), UDim2.new(0, 1, 1, -2), bottomRight2)
 end
 
---// ScreenGui gốc
+--============================================================
+-- SCREENGUI GỐC
+--============================================================
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AdminGui98"
 screenGui.ResetOnSpawn = false
@@ -1231,7 +799,7 @@ end
 local closeBtn = titleButton("X", -20)
 local minimizeBtn = titleButton("-", -38)
 
---// KÉO THẢ CỬA SỔ (drag)
+--// KÉO THẢ CỬA SỔ
 do
 	local dragging = false
 	local dragStart, startPos
@@ -1263,7 +831,7 @@ do
 	end)
 end
 
---// THÂN CỬA SỔ (ẩn/hiện khi minimize)
+--// THÂN CỬA SỔ
 local body = Instance.new("Frame")
 body.Name = "Body"
 body.BackgroundTransparency = 1
@@ -1282,7 +850,7 @@ minimizeBtn.MouseButton1Click:Connect(function()
 	window.Size = minimized and UDim2.fromOffset(360, 24) or UDim2.fromOffset(360, 460)
 end)
 
---// Ô TÌM KIẾM (lõm kiểu 98)
+--// Ô TÌM KIẾM
 local searchBox = Instance.new("Frame")
 searchBox.Size = UDim2.new(1, 0, 0, 22)
 searchBox.BackgroundColor3 = COLORS.FieldBg
@@ -1303,7 +871,7 @@ searchInput.TextXAlignment = Enum.TextXAlignment.Left
 searchInput.ClearTextOnFocus = false
 searchInput.Parent = searchBox
 
---// KHU VỰC "OP Admin +" (banner giống ảnh mẫu)
+--// BANNER "OP Admin +"
 local banner = Instance.new("Frame")
 banner.Position = UDim2.fromOffset(0, 28)
 banner.Size = UDim2.new(1, 0, 0, 56)
@@ -1358,7 +926,7 @@ unlockBtn.AutoButtonColor = false
 unlockBtn.Parent = banner
 applyBevel(unlockBtn, true)
 
---// DANH SÁCH LỆNH (ScrollingFrame, lõm kiểu 98)
+--// DANH SÁCH LỆNH (ScrollingFrame)
 local listOuter = Instance.new("Frame")
 listOuter.Position = UDim2.fromOffset(0, 90)
 listOuter.Size = UDim2.new(1, 0, 1, -90)
@@ -1383,8 +951,7 @@ layout.Padding = UDim.new(0, 0)
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Parent = list
 
-local function createRow(cmd, index)
-	local cmdName = cmd.name
+local function createRow(cmdName, index, action)
 	local row = Instance.new("TextButton")
 	row.Name = cmdName
 	row.Size = UDim2.new(1, 0, 0, 30)
@@ -1423,16 +990,17 @@ local function createRow(cmd, index)
 		label.TextColor3 = COLORS.Text
 	end)
 
-local function createRow(cmd, index)
-	local cmdName = cmd.name
-if cmd.action then
-	cmd.action(cmd)
-end
+	row.MouseButton1Click:Connect(function()
+		if action then
+			action()
+		end
+	end)
+
 	return row
 end
 
 for i, cmd in ipairs(COMMANDS) do
-	createRow(cmd.name, i)
+	createRow(cmd.name, i, cmd.action)
 end
 
 --// TÌM KIẾM LỌC DANH SÁCH
