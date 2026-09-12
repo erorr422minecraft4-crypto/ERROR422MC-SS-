@@ -1,0 +1,1446 @@
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+--// MÀU WIN98 CHUẨN
+local COLORS = {
+	Face = Color3.fromRGB(192, 192, 192),
+	Shadow = Color3.fromRGB(128, 128, 128),
+	DarkShadow = Color3.fromRGB(64, 64, 64),
+	Highlight = Color3.fromRGB(255, 255, 255),
+	TitleActive = Color3.fromRGB(10, 36, 106),
+	TitleActiveEnd = Color3.fromRGB(166, 202, 240),
+	TitleText = Color3.fromRGB(255, 255, 255),
+	FieldBg = Color3.fromRGB(255, 255, 255),
+	Text = Color3.fromRGB(0, 0, 0),
+	DimText = Color3.fromRGB(110, 110, 110),
+	Accent = Color3.fromRGB(0, 0, 128),
+}
+
+local FONT = Enum.Font.Arial
+local FONT_BOLD = Enum.Font.ArialBold
+
+--// DANH SÁCH LỆNH — chỉnh sửa tùy ý
+local COMMANDS = {
+	{
+		name = ";fly",
+		chat = ";fly",
+		action = function()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local character
+local humanoid
+local rootPart
+
+local flying = false
+local flySpeed = 75
+
+local bodyGyro
+local bodyVelocity
+local flyConnection
+
+local function setupCharacter(char)
+	character = char
+	humanoid = char:WaitForChild("Humanoid")
+	rootPart = char:WaitForChild("HumanoidRootPart")
+end
+
+setupCharacter(player.Character or player.CharacterAdded:Wait())
+
+local function startFly()
+	if flying or not rootPart or not humanoid then
+		return
+	end
+
+	flying = true
+
+	bodyGyro = Instance.new("BodyGyro")
+	bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+	bodyGyro.P = 100000
+	bodyGyro.D = 1000
+	bodyGyro.CFrame = rootPart.CFrame
+	bodyGyro.Parent = rootPart
+
+	bodyVelocity = Instance.new("BodyVelocity")
+	bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+	bodyVelocity.P = 100000
+	bodyVelocity.Velocity = Vector3.zero
+	bodyVelocity.Parent = rootPart
+
+	humanoid.PlatformStand = true
+	humanoid.AutoRotate = false
+
+	flyConnection = RunService.RenderStepped:Connect(function()
+		if not flying or not rootPart or not rootPart.Parent then
+			return
+		end
+
+		local camera = workspace.CurrentCamera
+		if not camera then
+			return
+		end
+
+		-- Nhân vật luôn nhìn theo camera
+		bodyGyro.CFrame = CFrame.lookAt(
+			rootPart.Position,
+			rootPart.Position + camera.CFrame.LookVector
+		)
+
+		local move = humanoid.MoveDirection
+
+		if move.Magnitude > 0 then
+			-- Hướng camera
+			local forward = camera.CFrame.LookVector
+			local right = camera.CFrame.RightVector
+
+			-- Chỉ lấy hướng trái/phải của joystick
+			local forwardAmount = move:Dot(Vector3.new(
+				forward.X, 0, forward.Z
+			))
+
+			local rightAmount = move:Dot(Vector3.new(
+				right.X, 0, right.Z
+			))
+
+			-- W/S là hướng chính
+			local direction
+
+			if math.abs(forwardAmount) > math.abs(rightAmount) then
+				direction = forward * math.sign(forwardAmount)
+			else
+				direction = right * math.sign(rightAmount)
+			end
+
+			-- Camera ngước/cúi quyết định lên/xuống
+			if direction.Magnitude > 0 then
+				direction = direction.Unit
+				bodyVelocity.Velocity = direction * flySpeed
+			end
+		else
+			-- Không đẩy joystick = đứng yên trên không
+			bodyVelocity.Velocity = Vector3.zero
+		end
+	end)
+end
+
+local function stopFly()
+	if not flying then
+		return
+	end
+
+	flying = false
+
+	if flyConnection then
+		flyConnection:Disconnect()
+		flyConnection = nil
+	end
+
+	if bodyGyro then
+		bodyGyro:Destroy()
+		bodyGyro = nil
+	end
+
+	if bodyVelocity then
+		bodyVelocity:Destroy()
+		bodyVelocity = nil
+	end
+
+	if humanoid then
+		humanoid.PlatformStand = false
+		humanoid.AutoRotate = true
+	end
+end
+
+local function setFlySpeed(value)
+	local speed = tonumber(value)
+
+	if speed then
+		flySpeed = math.clamp(speed, 1, 999)
+	end
+end
+
+-- =========================
+-- ERROR422 COMMAND SYSTEM
+-- =========================
+
+player.Chatted:Connect(function(message)
+	local args = string.split(message, " ")
+	local command = args[1]:lower()
+
+	if command == ";fly" then
+		startFly()
+
+	elseif command == ";unfly" then
+		stopFly()
+
+	elseif command == ";flyspeed" then
+		setFlySpeed(args[2])
+	end
+end)
+
+player.CharacterAdded:Connect(function(char)
+	stopFly()
+	setupCharacter(char)
+end)
+	},
+
+	{
+		name = ";sit",
+		action = function()
+			local character = player.Character
+			local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+
+			if humanoid then
+				humanoid.Sit = true
+			end
+		end
+	},
+
+	{
+		name = ";noclip",
+		chat = ";noclip",
+		action = function()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local character
+local noclip = false
+local connection
+
+local function setupCharacter(char)
+	character = char
+end
+
+setupCharacter(player.Character or player.CharacterAdded:Wait())
+
+local function startNoclip()
+	if noclip then return end
+
+	noclip = true
+
+	connection = RunService.Stepped:Connect(function()
+		if not character then return end
+
+		for _, part in ipairs(character:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part.CanCollide = false
+			end
+		end
+	end)
+end
+
+local function stopNoclip()
+	if not noclip then return end
+
+	noclip = false
+
+	if connection then
+		connection:Disconnect()
+		connection = nil
+	end
+
+	if character then
+		for _, part in ipairs(character:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part.CanCollide = true
+			end
+		end
+	end
+end
+
+-- COMMANDS
+player.Chatted:Connect(function(message)
+	local command = message:lower()
+
+	if command == ";noclip" then
+		startNoclip()
+
+	elseif command == ";unnoclip" then
+		stopNoclip()
+	end
+end)
+
+player.CharacterAdded:Connect(function(char)
+	stopNoclip()
+	setupCharacter(char)
+end)
+	},
+
+    {
+		name = ";speed (0-999)",
+		chat = ";speed 50",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local DEFAULT_SPEED = 16
+local speed = DEFAULT_SPEED
+
+local function setSpeed(value)
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then return end
+
+	local newSpeed = tonumber(value)
+	if not newSpeed then return end
+
+	speed = math.clamp(newSpeed, 1, 999)
+	humanoid.WalkSpeed = speed
+end
+
+local function resetSpeed()
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then return end
+
+	speed = DEFAULT_SPEED
+	humanoid.WalkSpeed = DEFAULT_SPEED
+end
+
+-- COMMANDS
+player.Chatted:Connect(function(message)
+	local args = string.split(message, " ")
+	local command = args[1]:lower()
+
+	if command == ";speed" then
+		setSpeed(args[2])
+
+	elseif command == ";unspeed" then
+		resetSpeed()
+	end
+end)
+
+player.CharacterAdded:Connect(function(character)
+	local humanoid = character:WaitForChild("Humanoid")
+	humanoid.WalkSpeed = speed
+end)
+	},
+	
+	{
+		name = ";Jump",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	local command = message:lower()
+
+	if command == ";jump" then
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.Jump = true
+		end
+	end
+end)
+	},
+	
+	{
+		name = ";jump",
+		chat = ";jump",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	local command = message:lower()
+
+	if command == ";jump" then
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.Jump = true
+		end
+	end
+end)
+	},
+	
+	{
+		name = ";gravity (0-999)",
+		chat = ";gravity",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	if message:lower() == ";respawn" then
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.Health = 0
+		end
+	end
+end)
+
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local DEFAULT_GRAVITY = 196.2
+local gravity = DEFAULT_GRAVITY
+
+local function setGravity(value)
+	local newGravity = tonumber(value)
+
+	if newGravity then
+		gravity = math.clamp(newGravity, 0, 999)
+		workspace.Gravity = gravity
+	end
+end
+
+local function resetGravity()
+	gravity = DEFAULT_GRAVITY
+	workspace.Gravity = DEFAULT_GRAVITY
+end
+
+player.Chatted:Connect(function(message)
+	local args = string.split(message, " ")
+	local command = args[1]:lower()
+
+	if command == ";gravity" then
+		setGravity(args[2])
+
+	elseif command == ";ungravity" then
+		resetGravity()
+	end
+end)
+	},
+	
+	{
+		name = ";freeze",
+		chat = ";freeze",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local frozen = false
+local savedTransforms = {}
+local savedWalkSpeed = 16
+local savedJumpPower = 50
+local savedAutoRotate = true
+
+local function getCharacter()
+	local character = player.Character
+	if not character then return end
+
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local rootPart = character:FindFirstChild("HumanoidRootPart")
+
+	return character, humanoid, rootPart
+end
+
+local function freeze()
+	if frozen then return end
+
+	local character, humanoid, rootPart = getCharacter()
+	if not humanoid or not rootPart then return end
+
+	frozen = true
+	savedTransforms = {}
+
+	savedWalkSpeed = humanoid.WalkSpeed
+	savedJumpPower = humanoid.JumpPower
+	savedAutoRotate = humanoid.AutoRotate
+
+	-- Lưu đúng pose hiện tại
+	for _, obj in ipairs(character:GetDescendants()) do
+		if obj:IsA("Motor6D") then
+			savedTransforms[obj] = obj.Transform
+		end
+	end
+
+	-- Dừng animation
+	for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+		track:Stop(0)
+	end
+
+	humanoid.WalkSpeed = 0
+	humanoid.JumpPower = 0
+	humanoid.AutoRotate = false
+
+	rootPart.Anchored = true
+
+	-- Giữ nguyên pose
+	for motor, transform in pairs(savedTransforms) do
+		if motor.Parent then
+			motor.Transform = transform
+		end
+	end
+end
+
+local function unfreeze()
+	if not frozen then return end
+
+	local character, humanoid, rootPart = getCharacter()
+
+	frozen = false
+
+	if rootPart then
+		rootPart.Anchored = false
+	end
+
+	if character then
+		for motor, transform in pairs(savedTransforms) do
+			if motor.Parent then
+				motor.Transform = CFrame.identity
+			end
+		end
+	end
+
+	if humanoid then
+		humanoid.WalkSpeed = savedWalkSpeed
+		humanoid.JumpPower = savedJumpPower
+		humanoid.AutoRotate = savedAutoRotate
+	end
+
+	savedTransforms = {}
+end
+
+-- COMMANDS
+player.Chatted:Connect(function(message)
+	local command = message:lower()
+
+	if command == ";freeze" then
+		freeze()
+
+	elseif command == ";unfreeze" then
+		unfreeze()
+	end
+end)
+
+player.CharacterAdded:Connect(function()
+	frozen = false
+	savedTransforms = {}
+end)
+
+	},
+	
+	{
+		name = ";freecam"
+		chat = ";freecam",,
+		action = function()
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local RS = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local cam = workspace.CurrentCamera
+local onMobile = not UIS.KeyboardEnabled
+
+local keysDown = {}
+local rotating = false
+local touchPos = nil
+local freecamEnabled = false
+
+local speed = 0.5
+local sens = 0.3
+
+if onMobile then
+    sens *= 2
+end
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+--// FREEZE
+local function freezeCharacter(state)
+    local character = player.Character
+    if not character then return end
+
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    local root = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoid then
+        if state then
+            humanoid.WalkSpeed = 0
+            humanoid.JumpPower = 0
+            humanoid.AutoRotate = false
+        else
+            humanoid.WalkSpeed = 16
+            humanoid.JumpPower = 50
+            humanoid.AutoRotate = true
+        end
+    end
+
+    if root then
+        root.Anchored = state
+    end
+end
+
+--// BẬT / TẮT FREECAM
+local function setFreecam(state)
+    freecamEnabled = state
+
+    if state then
+        cam.CameraType = Enum.CameraType.Scriptable
+        freezeCharacter(true)
+    else
+        rotating = false
+        touchPos = nil
+
+        keysDown["Enum.KeyCode.W"] = false
+        keysDown["Enum.KeyCode.A"] = false
+        keysDown["Enum.KeyCode.S"] = false
+        keysDown["Enum.KeyCode.D"] = false
+
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+
+        cam.CameraType = Enum.CameraType.Custom
+
+        local character = player.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                cam.CameraSubject = humanoid
+            end
+        end
+
+        freezeCharacter(false)
+    end
+end
+
+--// CAMERA
+local function renderStepped()
+    if not freecamEnabled then
+        return
+    end
+
+    if rotating then
+        local delta = UIS:GetMouseDelta()
+        local cf = cam.CFrame
+
+        cf *= CFrame.Angles(-math.rad(delta.Y), 0, 0)
+
+        cf =
+            CFrame.Angles(0, -math.rad(delta.X), 0)
+            * (cf - cf.Position)
+            + cf.Position
+
+        cf = CFrame.lookAt(
+            cf.Position,
+            cf.Position + cf.LookVector
+        )
+
+        if delta ~= Vector2.new(0, 0) then
+            cam.CFrame = cam.CFrame:Lerp(cf, sens)
+        end
+
+        UIS.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+    else
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+    end
+
+    if keysDown["Enum.KeyCode.W"] then
+        cam.CFrame *= CFrame.new(0, 0, -speed)
+    end
+
+    if keysDown["Enum.KeyCode.A"] then
+        cam.CFrame *= CFrame.new(-speed, 0, 0)
+    end
+
+    if keysDown["Enum.KeyCode.S"] then
+        cam.CFrame *= CFrame.new(0, 0, speed)
+    end
+
+    if keysDown["Enum.KeyCode.D"] then
+        cam.CFrame *= CFrame.new(speed, 0, 0)
+    end
+end
+
+RS.RenderStepped:Connect(renderStepped)
+
+--// KEYBOARD / TOUCH
+local validKeys = {
+    "Enum.KeyCode.W",
+    "Enum.KeyCode.A",
+    "Enum.KeyCode.S",
+    "Enum.KeyCode.D"
+}
+
+UIS.InputBegan:Connect(function(input)
+    if not freecamEnabled then
+        return
+    end
+
+    for _, key in pairs(validKeys) do
+        if key == tostring(input.KeyCode) then
+            keysDown[key] = true
+        end
+    end
+
+    if input.UserInputType == Enum.UserInputType.MouseButton2
+        or (
+            input.UserInputType == Enum.UserInputType.Touch
+            and UIS:GetMouseLocation().X > cam.ViewportSize.X / 2
+        ) then
+
+        rotating = true
+    end
+
+    if input.UserInputType == Enum.UserInputType.Touch then
+        if input.Position.X < cam.ViewportSize.X / 2 then
+            touchPos = input.Position
+        end
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    for key in pairs(keysDown) do
+        if key == tostring(input.KeyCode) then
+            keysDown[key] = false
+        end
+    end
+
+    if input.UserInputType == Enum.UserInputType.MouseButton2
+        or (
+            input.UserInputType == Enum.UserInputType.Touch
+            and UIS:GetMouseLocation().X > cam.ViewportSize.X / 2
+        ) then
+
+        rotating = false
+    end
+
+    if input.UserInputType == Enum.UserInputType.Touch and touchPos then
+        if input.Position.X < cam.ViewportSize.X / 2 then
+            touchPos = nil
+
+            keysDown["Enum.KeyCode.W"] = false
+            keysDown["Enum.KeyCode.A"] = false
+            keysDown["Enum.KeyCode.S"] = false
+            keysDown["Enum.KeyCode.D"] = false
+        end
+    end
+end)
+
+--// MOBILE JOYSTICK
+UIS.TouchMoved:Connect(function(input)
+    if not freecamEnabled or not touchPos then
+        return
+    end
+
+    if input.Position.X < cam.ViewportSize.X / 2 then
+
+        if input.Position.Y < touchPos.Y then
+            keysDown["Enum.KeyCode.W"] = true
+            keysDown["Enum.KeyCode.S"] = false
+        else
+            keysDown["Enum.KeyCode.W"] = false
+            keysDown["Enum.KeyCode.S"] = true
+        end
+
+        if input.Position.X < touchPos.X - 15 then
+            keysDown["Enum.KeyCode.A"] = true
+            keysDown["Enum.KeyCode.D"] = false
+
+        elseif input.Position.X > touchPos.X + 15 then
+            keysDown["Enum.KeyCode.A"] = false
+            keysDown["Enum.KeyCode.D"] = true
+
+        else
+            keysDown["Enum.KeyCode.A"] = false
+            keysDown["Enum.KeyCode.D"] = false
+        end
+    end
+end)
+
+--// CHAT COMMAND
+player.Chatted:Connect(function(message)
+    message = message:lower():gsub("%s+", "")
+
+    if message == ";freecam" then
+        setFreecam(true)
+
+    elseif message == ";unfreecam" then
+        setFreecam(false)
+    end
+end)
+
+--// GIỮ FREEZE KHI RESPAWN
+player.CharacterAdded:Connect(function()
+    if freecamEnabled then
+        task.wait(0.2)
+        freezeCharacter(true)
+    end
+end)
+	},
+	
+	{
+		name = ";viewcam (player name)",
+		chat = ";viewcam",
+		action = function()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+
+local viewing = false
+local targetPlayer = nil
+local connection = nil
+
+local oldCameraType
+local oldCameraSubject
+
+local function findPlayer(name)
+	name = name:lower()
+
+	-- Tên đầy đủ trước
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name:lower() == name then
+			return plr
+		end
+	end
+
+	-- Cho phép nhập một phần tên
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name:lower():sub(1, #name) == name then
+			return plr
+		end
+	end
+
+	return nil
+end
+
+local function unviewcam()
+	if not viewing then return end
+
+	viewing = false
+	targetPlayer = nil
+
+	if connection then
+		connection:Disconnect()
+		connection = nil
+	end
+
+	camera.CameraType = oldCameraType or Enum.CameraType.Custom
+	camera.CameraSubject = oldCameraSubject
+
+	oldCameraType = nil
+	oldCameraSubject = nil
+end
+
+local function viewcam(target)
+	if not target or target == player then
+		return
+	end
+
+	local character = target.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+
+	if not humanoid or not root then
+		return
+	end
+
+	-- Nếu đang view người khác thì đổi mục tiêu
+	if viewing then
+		unviewcam()
+	end
+
+	viewing = true
+	targetPlayer = target
+
+	oldCameraType = camera.CameraType
+	oldCameraSubject = camera.CameraSubject
+
+	camera.CameraType = Enum.CameraType.Custom
+	camera.CameraSubject = humanoid
+
+	connection = RunService.RenderStepped:Connect(function()
+		if not viewing then
+			return
+		end
+
+		local currentCharacter = targetPlayer.Character
+		local currentHumanoid =
+			currentCharacter and
+			currentCharacter:FindFirstChildOfClass("Humanoid")
+
+		if not currentHumanoid or currentHumanoid.Health <= 0 then
+			unviewcam()
+			return
+		end
+
+		-- Giữ camera bám mục tiêu
+		if camera.CameraSubject ~= currentHumanoid then
+			camera.CameraSubject = currentHumanoid
+		end
+	end)
+end
+
+player.Chatted:Connect(function(message)
+	local args = string.split(message, " ")
+	local command = args[1]:lower()
+
+	if command == ";viewcam" then
+		local name = table.concat(args, " ", 2)
+
+		if name ~= "" then
+			local target = findPlayer(name)
+
+			if target then
+				viewcam(target)
+			end
+		end
+
+	elseif command == ";unviewcam" then
+		unviewcam()
+	end
+end)
+	},
+	
+	{
+		name = ";rejoin",
+		chat = ";Rejoin",
+		action = function()
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	message = message:lower():gsub("%s+", "")
+
+	if message == ";rejoin" then
+		local ok, err = pcall(function()
+			TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, player)
+		end)
+		if not ok then
+			warn("Rejoin thất bại:", err)
+		end
+	end
+end)
+	},
+	
+	{
+		name = ";invisible",
+		action = function()
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local invisible = false
+local ghost
+
+local savedCFrame
+local savedTransparency = {}
+
+local function createGhost(character)
+	character.Archivable = true
+
+	local clone = character:Clone()
+	clone.Name = "ERROR422_Ghost"
+
+	for _, obj in ipairs(clone:GetDescendants()) do
+		if obj:IsA("BasePart") then
+			obj.Transparency = 0.5
+			obj.CanCollide = false
+			obj.CanTouch = false
+			obj.CanQuery = false
+			obj.CastShadow = false
+		elseif obj:IsA("Decal") or obj:IsA("Texture") then
+			obj.Transparency = 0.5
+		elseif obj:IsA("Script") or obj:IsA("LocalScript") then
+			obj:Destroy()
+		end
+	end
+
+	clone.Parent = workspace
+	clone:PivotTo(savedCFrame)
+
+	return clone
+end
+
+local function setInvisible()
+	if invisible then return end
+
+	local character = player.Character
+	if not character then return end
+
+	local root = character:FindFirstChild("HumanoidRootPart")
+	if not root then return end
+
+	invisible = true
+	savedCFrame = root.CFrame
+
+	-- Tạo ghost tại vị trí cũ
+	ghost = createGhost(character)
+
+	-- Ẩn nhân vật thật trên client
+	for _, obj in ipairs(character:GetDescendants()) do
+		if obj:IsA("BasePart") then
+			savedTransparency[obj] = obj.LocalTransparencyModifier
+			obj.LocalTransparencyModifier = 1
+		elseif obj:IsA("Decal") or obj:IsA("Texture") then
+			savedTransparency[obj] = obj.Transparency
+			obj.Transparency = 1
+		end
+	end
+end
+
+local function setVisible()
+	if not invisible then return end
+
+	invisible = false
+
+	if ghost then
+		ghost:Destroy()
+		ghost = nil
+	end
+
+	for obj, value in pairs(savedTransparency) do
+		if obj and obj.Parent then
+			if obj:IsA("BasePart") then
+				obj.LocalTransparencyModifier = value
+			elseif obj:IsA("Decal") or obj:IsA("Texture") then
+				obj.Transparency = value
+			end
+		end
+	end
+
+	table.clear(savedTransparency)
+end
+
+player.Chatted:Connect(function(message)
+	message = message:lower():gsub("%s+", "")
+
+	if message == ";invisible" then
+		setInvisible()
+
+	elseif message == ";visible" then
+		setVisible()
+	end
+end)
+
+	},
+	
+	{
+		name = ";tp (player name)",
+		action = function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function findPlayer(name)
+	name = name:lower()
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name:lower() == name or plr.DisplayName:lower() == name then
+			return plr
+		end
+	end
+
+	-- Cho phép nhập một phần tên
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name:lower():sub(1, #name) == name then
+			return plr
+		end
+	end
+
+	return nil
+end
+
+player.Chatted:Connect(function(message)
+	local args = message:split(" ")
+
+	if args[1]:lower() ~= ";tp" then
+		return
+	end
+
+	local targetName = args[2]
+	if not targetName then
+		return
+	end
+
+	local target = findPlayer(targetName)
+	if not target then
+		warn("Không tìm thấy player:", targetName)
+		return
+	end
+
+	local character = player.Character
+	local targetCharacter = target.Character
+
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	local targetRoot = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+
+	if root and targetRoot then
+		root.CFrame = targetRoot.CFrame
+	end
+end)
+	},
+	
+	{
+		name = ";respawn",
+		chat = ";respawn",
+		action = function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	message = message:lower():gsub("%s+", "")
+
+	if message == ";respawn" then
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.Health = 0
+		end
+	end
+end)
+	},
+	
+	{
+		name = ";jumppower",
+		chat = ";jumppower 20",
+		action = function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	local args = message:split(" ")
+
+	if args[1]:lower() ~= ";jumppower" then
+		return
+	end
+
+	local humanoid = player.Character
+		and player.Character:FindFirstChildOfClass("Humanoid")
+
+	if not humanoid then
+		return
+	end
+
+	local power = tonumber(args[2])
+	if not power then
+		return
+	end
+
+	humanoid.UseJumpPower = true
+	humanoid.JumpPower = math.clamp(power, 1, 999)
+end)
+	},
+}
+
+--// TIỆN ÍCH: tạo bevel kiểu win98 (viền nổi/lõm)
+local function applyBevel(frame, raised)
+	local topLeft = raised and COLORS.Highlight or COLORS.Shadow
+	local bottomRight = raised and COLORS.Shadow or COLORS.Highlight
+	local topLeft2 = raised and COLORS.Face or COLORS.DarkShadow
+	local bottomRight2 = raised and COLORS.DarkShadow or COLORS.Face
+
+	local function line(pos, size, color)
+		local l = Instance.new("Frame")
+		l.BorderSizePixel = 0
+		l.BackgroundColor3 = color
+		l.Position = pos
+		l.Size = size
+		l.ZIndex = frame.ZIndex + 1
+		l.Parent = frame
+		return l
+	end
+
+	line(UDim2.new(0, 0, 0, 0), UDim2.new(1, 0, 0, 1), topLeft)
+	line(UDim2.new(0, 0, 0, 0), UDim2.new(0, 1, 1, 0), topLeft)
+	line(UDim2.new(0, 0, 1, -1), UDim2.new(1, 0, 0, 1), bottomRight)
+	line(UDim2.new(1, -1, 0, 0), UDim2.new(0, 1, 1, 0), bottomRight)
+
+	line(UDim2.new(0, 1, 0, 1), UDim2.new(1, -2, 0, 1), topLeft2)
+	line(UDim2.new(0, 1, 0, 1), UDim2.new(0, 1, 1, -2), topLeft2)
+	line(UDim2.new(0, 1, 1, -2), UDim2.new(1, -2, 0, 1), bottomRight2)
+	line(UDim2.new(1, -2, 0, 1), UDim2.new(0, 1, 1, -2), bottomRight2)
+end
+
+--// ScreenGui gốc
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AdminGui98"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = playerGui
+
+--// CỬA SỔ CHÍNH
+local window = Instance.new("Frame")
+window.Name = "Window"
+window.Size = UDim2.fromOffset(360, 460)
+window.Position = UDim2.new(0.5, -180, 0.5, -230)
+window.BackgroundColor3 = COLORS.Face
+window.BorderSizePixel = 0
+window.Active = true
+window.Parent = screenGui
+applyBevel(window, true)
+
+--// TITLE BAR
+local titleBar = Instance.new("Frame")
+titleBar.Name = "TitleBar"
+titleBar.Size = UDim2.new(1, -4, 0, 20)
+titleBar.Position = UDim2.fromOffset(2, 2)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = window
+
+local titleGradient = Instance.new("UIGradient")
+titleGradient.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, COLORS.TitleActive),
+	ColorSequenceKeypoint.new(1, COLORS.TitleActiveEnd),
+})
+titleGradient.Parent = titleBar
+titleBar.BackgroundColor3 = Color3.new(1, 1, 1)
+
+local titleText = Instance.new("TextLabel")
+titleText.BackgroundTransparency = 1
+titleText.Position = UDim2.fromOffset(4, 0)
+titleText.Size = UDim2.new(1, -50, 1, 0)
+titleText.Font = FONT_BOLD
+titleText.Text = "Commands"
+titleText.TextColor3 = COLORS.TitleText
+titleText.TextSize = 14
+titleText.TextXAlignment = Enum.TextXAlignment.Left
+titleText.Parent = titleBar
+
+local function titleButton(text, xOffsetFromRight)
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.fromOffset(16, 14)
+	btn.Position = UDim2.new(1, xOffsetFromRight, 0, 3)
+	btn.BackgroundColor3 = COLORS.Face
+	btn.BorderSizePixel = 0
+	btn.Font = FONT_BOLD
+	btn.Text = text
+	btn.TextSize = 12
+	btn.TextColor3 = COLORS.Text
+	btn.AutoButtonColor = false
+	btn.Parent = titleBar
+	applyBevel(btn, true)
+	return btn
+end
+
+local closeBtn = titleButton("X", -20)
+local minimizeBtn = titleButton("-", -38)
+
+--// KÉO THẢ CỬA SỔ (drag)
+do
+	local dragging = false
+	local dragStart, startPos
+
+	titleBar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = window.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement
+			or input.UserInputType == Enum.UserInputType.Touch) then
+			local delta = input.Position - dragStart
+			window.Position = UDim2.new(
+				startPos.X.Scale, startPos.X.Offset + delta.X,
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y
+			)
+		end
+	end)
+end
+
+--// THÂN CỬA SỔ (ẩn/hiện khi minimize)
+local body = Instance.new("Frame")
+body.Name = "Body"
+body.BackgroundTransparency = 1
+body.Position = UDim2.fromOffset(4, 26)
+body.Size = UDim2.new(1, -8, 1, -30)
+body.Parent = window
+
+closeBtn.MouseButton1Click:Connect(function()
+	screenGui:Destroy()
+end)
+
+local minimized = false
+minimizeBtn.MouseButton1Click:Connect(function()
+	minimized = not minimized
+	body.Visible = not minimized
+	window.Size = minimized and UDim2.fromOffset(360, 24) or UDim2.fromOffset(360, 460)
+end)
+
+--// Ô TÌM KIẾM (lõm kiểu 98)
+local searchBox = Instance.new("Frame")
+searchBox.Size = UDim2.new(1, 0, 0, 22)
+searchBox.BackgroundColor3 = COLORS.FieldBg
+searchBox.BorderSizePixel = 0
+searchBox.Parent = body
+applyBevel(searchBox, false)
+
+local searchInput = Instance.new("TextBox")
+searchInput.BackgroundTransparency = 1
+searchInput.Position = UDim2.fromOffset(4, 0)
+searchInput.Size = UDim2.new(1, -8, 1, 0)
+searchInput.Font = FONT
+searchInput.PlaceholderText = "Search"
+searchInput.Text = ""
+searchInput.TextColor3 = COLORS.Text
+searchInput.TextSize = 13
+searchInput.TextXAlignment = Enum.TextXAlignment.Left
+searchInput.ClearTextOnFocus = false
+searchInput.Parent = searchBox
+
+--// KHU VỰC "OP Admin +" (banner giống ảnh mẫu)
+local banner = Instance.new("Frame")
+banner.Position = UDim2.fromOffset(0, 28)
+banner.Size = UDim2.new(1, 0, 0, 56)
+banner.BackgroundColor3 = COLORS.Face
+banner.BorderSizePixel = 0
+banner.Parent = body
+applyBevel(banner, false)
+
+local bannerLabel = Instance.new("TextLabel")
+bannerLabel.BackgroundTransparency = 1
+bannerLabel.Position = UDim2.fromOffset(6, 2)
+bannerLabel.Size = UDim2.new(1, -12, 0, 14)
+bannerLabel.Font = FONT_BOLD
+bannerLabel.Text = "OP Admin +"
+bannerLabel.TextColor3 = COLORS.DimText
+bannerLabel.TextSize = 12
+bannerLabel.TextXAlignment = Enum.TextXAlignment.Left
+bannerLabel.Parent = banner
+
+local adminName = Instance.new("TextLabel")
+adminName.BackgroundTransparency = 1
+adminName.Position = UDim2.fromOffset(6, 18)
+adminName.Size = UDim2.new(1, -90, 0, 16)
+adminName.Font = FONT_BOLD
+adminName.Text = "Admin [OP]"
+adminName.TextColor3 = COLORS.Text
+adminName.TextSize = 14
+adminName.TextXAlignment = Enum.TextXAlignment.Left
+adminName.Parent = banner
+
+local adminDesc = Instance.new("TextLabel")
+adminDesc.BackgroundTransparency = 1
+adminDesc.Position = UDim2.fromOffset(6, 34)
+adminDesc.Size = UDim2.new(1, -90, 0, 16)
+adminDesc.Font = FONT
+adminDesc.Text = "Unlock OP Admin commands"
+adminDesc.TextColor3 = COLORS.DimText
+adminDesc.TextSize = 12
+adminDesc.TextXAlignment = Enum.TextXAlignment.Left
+adminDesc.Parent = banner
+
+local unlockBtn = Instance.new("TextButton")
+unlockBtn.Position = UDim2.new(1, -76, 0.5, -10)
+unlockBtn.Size = UDim2.fromOffset(70, 20)
+unlockBtn.BackgroundColor3 = COLORS.Face
+unlockBtn.BorderSizePixel = 0
+unlockBtn.Font = FONT_BOLD
+unlockBtn.Text = "UNLOCK"
+unlockBtn.TextSize = 11
+unlockBtn.TextColor3 = COLORS.Text
+unlockBtn.AutoButtonColor = false
+unlockBtn.Parent = banner
+applyBevel(unlockBtn, true)
+
+--// DANH SÁCH LỆNH (ScrollingFrame, lõm kiểu 98)
+local listOuter = Instance.new("Frame")
+listOuter.Position = UDim2.fromOffset(0, 90)
+listOuter.Size = UDim2.new(1, 0, 1, -90)
+listOuter.BackgroundColor3 = COLORS.FieldBg
+listOuter.BorderSizePixel = 0
+listOuter.Parent = body
+applyBevel(listOuter, false)
+
+local list = Instance.new("ScrollingFrame")
+list.Position = UDim2.fromOffset(2, 2)
+list.Size = UDim2.new(1, -4, 1, -4)
+list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 14
+list.ScrollBarImageColor3 = COLORS.Shadow
+list.CanvasSize = UDim2.fromOffset(0, 0)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+list.Parent = listOuter
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 0)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = list
+
+local function createRow(cmd, index)
+	local cmdName = cmd.name
+	local row = Instance.new("TextButton")
+	row.Name = cmdName
+	row.Size = UDim2.new(1, 0, 0, 30)
+	row.BackgroundColor3 = index % 2 == 0 and Color3.fromRGB(240, 240, 240) or COLORS.FieldBg
+	row.BorderSizePixel = 0
+	row.AutoButtonColor = false
+	row.Text = ""
+	row.LayoutOrder = index
+	row.Parent = list
+
+	local icon = Instance.new("Frame")
+	icon.Size = UDim2.fromOffset(18, 18)
+	icon.Position = UDim2.fromOffset(6, 6)
+	icon.BackgroundColor3 = COLORS.Accent
+	icon.BorderSizePixel = 0
+	icon.Parent = row
+	applyBevel(icon, true)
+
+	local label = Instance.new("TextLabel")
+	label.BackgroundTransparency = 1
+	label.Position = UDim2.fromOffset(32, 0)
+	label.Size = UDim2.new(1, -40, 1, 0)
+	label.Font = FONT
+	label.Text = cmdName
+	label.TextColor3 = COLORS.Text
+	label.TextSize = 13
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Parent = row
+
+	row.MouseEnter:Connect(function()
+		row.BackgroundColor3 = Color3.fromRGB(10, 36, 106)
+		label.TextColor3 = Color3.new(1, 1, 1)
+	end)
+	row.MouseLeave:Connect(function()
+		row.BackgroundColor3 = index % 2 == 0 and Color3.fromRGB(240, 240, 240) or COLORS.FieldBg
+		label.TextColor3 = COLORS.Text
+	end)
+
+local function createRow(cmd, index)
+	local cmdName = cmd.name
+if cmd.action then
+	cmd.action(cmd)
+end
+	return row
+end
+
+for i, cmd in ipairs(COMMANDS) do
+	createRow(cmd.name, i)
+end
+
+--// TÌM KIẾM LỌC DANH SÁCH
+searchInput:GetPropertyChangedSignal("Text"):Connect(function()
+	local query = searchInput.Text:lower()
+	for _, child in ipairs(list:GetChildren()) do
+		if child:IsA("TextButton") then
+			child.Visible = query == "" or child.Name:lower():find(query, 1, true) ~= nil
+		end
+	end
+end)
